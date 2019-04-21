@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ntrada.Extensions.RabbitMq_" Version="1.0.1" />
+    <PackageReference Include="Ntrada_" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>
