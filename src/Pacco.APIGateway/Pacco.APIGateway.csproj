@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ntrada_" Version="1.0.2" />
     <PackageReference Include="Ntrada.Extensions.RabbitMq_" Version="1.0.1" />
-    <PackageReference Include="Ntrada_" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
