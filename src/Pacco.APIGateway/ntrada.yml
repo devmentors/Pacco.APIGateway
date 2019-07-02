@@ -40,7 +40,7 @@ auth:
 #extensions:
 #  dispatcher:
 #    use: rabbitmq
-#    configuration: rabbitmq.json
+#    settings: rabbitmq
 
 modules:
 - name: home

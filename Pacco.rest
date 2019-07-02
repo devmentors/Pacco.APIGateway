@@ -1,5 +1,5 @@
 @api = http://localhost:5000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYTJmNjVjOTc4OTE0NTNkYWVhNjBmODQ5OGJlMjg3NiIsInVuaXF1ZV9uYW1lIjoiZWEyZjY1Yzk3ODkxNDUzZGFlYTYwZjg0OThiZTI4NzYiLCJqdGkiOiIwZDYxNGFmMC05NWJkLTRlZmMtODk3NS0xNzAwMGQ5OGY1MzkiLCJpYXQiOiIxNTYyMTAxMTE1NTIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsIm5iZiI6MTU2MjEwMTExNSwiZXhwIjoxNTYyMTA0NzE1LCJpc3MiOiJwYWNjbyJ9.nfDrNWLRdED-j3f3hPoB_rIj00BoHcSRazmg-QBS_Qo
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZDlkOTI3NjRlOTY0M2VlYWRkMzNiMDc2MGY5NTFkMSIsInVuaXF1ZV9uYW1lIjoiZWQ5ZDkyNzY0ZTk2NDNlZWFkZDMzYjA3NjBmOTUxZDEiLCJqdGkiOiIzZmViMDk1Mi1kOWE3LTQyZjgtODU4ZS1lNzlmZmJhY2UyNmQiLCJpYXQiOiIxNTYyMTAyMTU4MjY4IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsIm5iZiI6MTU2MjEwMjE1OCwiZXhwIjoxNTYyMTA1NzU4LCJpc3MiOiJwYWNjbyJ9.FJh3JiEBfdILSxCKFx5CzncBypRzJ1tDJT-hPXoZsTw
 
 # ============== IDENTITY ==================== #
 
@@ -18,7 +18,7 @@ POST {{api}}/identity/sign-in
 Content-Type: application/json
 
 {
-  "email": "user1@test.com",
+  "email": "user2@test.com",
   "password": "secret"
 }
 

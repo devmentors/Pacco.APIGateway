@@ -23,6 +23,19 @@ routes:
   bind:
     - id:@user_id
   auth: true
+  payload: create_customer
+  schema: create_customer.schema
+  
+#- upstream: /
+#  method: POST
+#  auth: true
+#  use: dispatcher
+#  exchange: customers
+#  routing_key: customers.create_customer
+#  bind:
+#    - id:@user_id
+#  payload: create_customer
+#  schema: create_customer.schema
   
 services:
   customers-service:
