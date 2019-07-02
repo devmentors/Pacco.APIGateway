@@ -1,0 +1,26 @@
+name: Identity
+path: /identity
+
+routes:
+- upstream: /me
+  method: GET
+  use: downstream
+  downstream: identity-service/me
+  auth: true
+
+- upstream: /sign-up
+  method: POST
+  use: downstream
+  downstream: identity-service/sign-up
+  auth: false
+
+- upstream: /sign-in
+  method: POST
+  use: downstream
+  downstream: identity-service/sign-in
+  auth: false
+  
+services:
+  identity-service:
+    url: localhost:5004
+#    url: localhost:9999/identity-service
