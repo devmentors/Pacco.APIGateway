@@ -1,0 +1,30 @@
+name: Customers
+path: /customers
+
+routes:
+- upstream: /
+  method: GET
+  use: downstream
+  downstream: customers-service/customers
+  auth: true
+  claims:
+    role: admin
+
+- upstream: /me
+  method: GET
+  use: downstream
+  downstream: customers-service/customers/@user_id
+  auth: true
+
+- upstream: /
+  method: POST
+  use: downstream
+  downstream: customers-service/customers
+  bind:
+    - id:@user_id
+  auth: true
+  
+services:
+  customers-service:
+    url: localhost:5002
+#    url: localhost:9999/customers-service
