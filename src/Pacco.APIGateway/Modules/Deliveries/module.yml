@@ -1,0 +1,38 @@
+name: Deliveries
+path: /deliveries
+
+routes:
+- upstream: /{orderId}
+  method: GET
+  use: downstream
+  downstream: deliveries-service/deliveries/{orderId}
+  auth: true
+
+- upstream: /{orderId}/start
+  method: POST
+  use: downstream
+  downstream: deliveries-service/deliveries/{orderId}/start
+  auth: true
+
+- upstream: /{orderId}/fail
+  method: POST
+  use: downstream
+  downstream: deliveries-service/deliveries/{orderId}/fail
+  auth: true
+
+- upstream: /{orderId}/complete
+  method: POST
+  use: downstream
+  downstream: deliveries-service/deliveries/{orderId}/complete
+  auth: true
+
+- upstream: /{id}/registrations
+  method: POST
+  use: downstream
+  downstream: deliveries-service/deliveries/{id}/registrations
+  auth: true
+  
+services:
+  deliveries-service:
+    url: localhost:5003
+#    url: localhost:9999/deliveries-service

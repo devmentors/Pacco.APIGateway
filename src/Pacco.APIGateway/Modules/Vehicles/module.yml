@@ -1,0 +1,32 @@
+name: Vehicles
+path: /vehicles
+
+routes:
+- upstream: /
+  method: GET
+  use: downstream
+  downstream: vehicles-service/vehicles
+  auth: true
+
+- upstream: /
+  method: POST
+  use: downstream
+  downstream: vehicles-service/vehicles
+  auth: true
+
+- upstream: /{id}
+  method: PUT
+  use: downstream
+  downstream: vehicles-service/vehicles/{id}
+  auth: true
+
+- upstream: /{id}
+  method: DELETE
+  use: downstream
+  downstream: vehicles-service/vehicles/{id}
+  auth: true
+  
+services:
+  vehicles-service:
+    url: localhost:5009
+#    url: localhost:9999/vehicles-service

@@ -1,0 +1,14 @@
+name: Pricing
+path: /pricing
+
+routes:
+- upstream: /
+  method: GET
+  use: downstream
+  downstream: pricing-service/pricing?customerId=@user_id
+  auth: true
+  
+services:
+  pricing-service:
+    url: localhost:5008
+#    url: localhost:9999/pricing-service

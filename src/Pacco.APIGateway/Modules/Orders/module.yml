@@ -1,0 +1,52 @@
+name: Orders
+path: /orders
+
+routes:
+- upstream: /
+  method: GET
+  use: downstream
+  downstream: orders-service/orders?customerId=@user_id
+  auth: true
+
+- upstream: /{id}
+  method: GET
+  use: downstream
+  downstream: orders-service/orders/{id}
+  auth: true
+
+- upstream: /
+  method: POST
+  use: downstream
+  downstream: orders-service/orders
+  bind:
+    - customerId:@user_id
+  auth: true
+
+- upstream: /{id}
+  method: DELETE
+  use: downstream
+  downstream: orders-service/orders/{id}
+  auth: true
+  
+- upstream: /{orderId}/parcels
+  method: POST
+  use: downstream
+  downstream: orders-service/orders/{orderId}/parcels
+  auth: true
+  
+- upstream: /{orderId}/parcels/{parcelId}
+  method: DELETE
+  use: downstream
+  downstream: orders-service/orders/{orderId}/parcels/{parcelId}
+  auth: true
+  
+- upstream: /{orderId}/vehicles
+  method: POST
+  use: downstream
+  downstream: orders-service/orders/{orderId}/vehicles
+  auth: true  
+  
+services:
+  orders-service:
+    url: localhost:5007
+#    url: localhost:9999/orders-service

@@ -1,0 +1,40 @@
+name: Parcels
+path: /parcels
+
+routes:
+- upstream: /
+  method: GET
+  use: downstream
+  downstream: parcels-service/parcels?customerId=@user_id
+  auth: true
+
+- upstream: /{id}
+  method: GET
+  use: downstream
+  downstream: parcels-service/parcels/{id}
+  auth: true
+
+- upstream: /volume
+  method: GET
+  use: downstream
+  downstream: parcels-service/parcels_/volume
+  auth: true
+
+- upstream: /
+  method: POST
+  use: downstream
+  downstream: parcels-service/parcels
+  bind:
+    - customerId:@user_id
+  auth: true
+
+- upstream: /{id}
+  method: DELETE
+  use: downstream
+  downstream: parcels-service/parcels/{id}
+  auth: true
+  
+services:
+  parcels-service:
+    url: localhost:5007
+#    url: localhost:9999/parcels-service
