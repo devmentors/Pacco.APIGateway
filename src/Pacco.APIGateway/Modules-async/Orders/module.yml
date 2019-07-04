@@ -16,35 +16,49 @@ routes:
 
 - upstream: /
   method: POST
-  use: downstream
-  downstream: orders-service/orders
+  auth: true
+  use: dispatcher
+  exchange: orders
+  routing_key: orders.create_order
   bind:
     - customerId:@user_id
-  auth: true
 
 - upstream: /{id}
   method: DELETE
-  use: downstream
-  downstream: orders-service/orders/{id}
   auth: true
+  use: dispatcher
+  exchange: orders
+  routing_key: orders.delete_order
+  bind:
+    - id:{id}
   
 - upstream: /{orderId}/parcels
   method: POST
-  use: downstream
-  downstream: orders-service/orders/{orderId}/parcels
   auth: true
+  use: dispatcher
+  exchange: orders
+  routing_key: orders.add_parcel_to_order
+  bind:
+    - orderId:{orderId}
   
 - upstream: /{orderId}/parcels/{parcelId}
   method: DELETE
-  use: downstream
-  downstream: orders-service/orders/{orderId}/parcels/{parcelId}
   auth: true
+  use: dispatcher
+  exchange: orders
+  routing_key: orders.delete_parcel_from_order
+  bind:
+    - orderId:{orderId}
+    - parcelId:{parcelId}
   
 - upstream: /{orderId}/vehicles
   method: POST
-  use: downstream
-  downstream: orders-service/orders/{orderId}/vehicles
-  auth: true  
+  auth: true
+  use: dispatcher
+  exchange: orders
+  routing_key: orders.assign_vehicle_to_order
+  bind:
+    - orderId:{orderId}
   
 services:
   orders-service:

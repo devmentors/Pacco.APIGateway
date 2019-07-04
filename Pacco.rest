@@ -1,5 +1,10 @@
 @api = http://localhost:5000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZDlkOTI3NjRlOTY0M2VlYWRkMzNiMDc2MGY5NTFkMSIsInVuaXF1ZV9uYW1lIjoiZWQ5ZDkyNzY0ZTk2NDNlZWFkZDMzYjA3NjBmOTUxZDEiLCJqdGkiOiIzZmViMDk1Mi1kOWE3LTQyZjgtODU4ZS1lNzlmZmJhY2UyNmQiLCJpYXQiOiIxNTYyMTAyMTU4MjY4IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsIm5iZiI6MTU2MjEwMjE1OCwiZXhwIjoxNTYyMTA1NzU4LCJpc3MiOiJwYWNjbyJ9.FJh3JiEBfdILSxCKFx5CzncBypRzJ1tDJT-hPXoZsTw
+@token = xxx.xxx.xxx
+@customerId = 00000000-0000-0000-0000-000000000000
+@parcelId = 00000000-0000-0000-0000-000000000000
+@orderId = 00000000-0000-0000-0000-000000000000
+@vehicleId = 00000000-0000-0000-0000-000000000000
+@operationId = 00000000-0000-0000-0000-000000000000
 
 # ============== IDENTITY ==================== #
 
@@ -8,7 +13,7 @@ POST {{api}}/identity/sign-up
 Content-Type: application/json
 
 {
-  "email": "user1@test.com",
+  "email": "pacco-user1@mailinator.com",
   "password": "secret",
   "role": "user"
 }
@@ -18,7 +23,7 @@ POST {{api}}/identity/sign-in
 Content-Type: application/json
 
 {
-  "email": "user2@test.com",
+  "email": "pacco-user1@mailinator.com",
   "password": "secret"
 }
 
@@ -48,3 +53,94 @@ Content-Type: application/json
   "fullName": "John Doe",
   "address": "New York"
 }
+
+# ============== AVAILABILITY ==================== #
+
+
+
+# ============== DELIVERIES ==================== #
+
+
+
+# ============== OPERATIONS ==================== #
+
+###
+GET {{api}}/operations/{{operationId}}
+
+# ============== ORDERS ==================== #
+
+###
+GET {{api}}/orders
+Authorization: Bearer {{token}}
+
+###
+GET {{api}}/orders/{{orderId}}
+Authorization: Bearer {{token}}
+
+###
+POST {{api}}/orders
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+}
+
+###
+DELETE {{api}}/orders/{{orderId}}
+Authorization: Bearer {{token}}
+
+###
+POST {{api}}/orders/{{orderId}}/parcels
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "parcelId": "{{parcelId}}"
+}
+
+###
+POST {{api}}/orders/{{orderId}}/vehicles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "vehicleId": "{{vehicleId}}"
+}
+
+###
+DELETE {{api}}/orders/{{orderId}}/parcels/{{parcelId}}
+Authorization: Bearer {{token}}
+
+# ============== PARCELS ==================== #
+
+###
+GET {{api}}/parcels
+Authorization: Bearer {{token}}
+
+###
+GET {{api}}/parcels/{{parcelId}}
+Authorization: Bearer {{token}}
+
+###
+POST {{api}}/parcels
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "variant": "weapon",
+  "size": "large",
+  "name": "Parcel #1",
+  "description": "My parcel #1"
+}
+
+###
+DELETE {{api}}/parcels/{{parcelId}}
+Authorization: Bearer {{token}}
+
+# ============== PRICING ==================== #
+
+
+
+# ============== VEHICLES ==================== #

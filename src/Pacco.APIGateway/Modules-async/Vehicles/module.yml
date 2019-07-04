@@ -1,0 +1,39 @@
+name: Vehicles
+path: /vehicles
+
+routes:
+- upstream: /
+  method: GET
+  use: downstream
+  downstream: vehicles-service/vehicles
+  auth: true
+
+- upstream: /
+  method: POST
+  auth: true
+  use: dispatcher
+  exchange: vehicles
+  routing_key: vehicles.add_vehicle
+
+- upstream: /{id}
+  method: PUT
+  auth: true
+  use: dispatcher
+  exchange: vehicles
+  routing_key: vehicles.update_vehicle
+  bind:
+    - id:{id}
+
+- upstream: /{id}
+  method: DELETE
+  auth: true
+  use: dispatcher
+  exchange: vehicles
+  routing_key: vehicles.delete_vehicle
+  bind:
+    - id:{id}
+  
+services:
+  vehicles-service:
+    url: localhost:5009
+#    url: localhost:9999/vehicles-service

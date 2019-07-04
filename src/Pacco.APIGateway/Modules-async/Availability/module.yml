@@ -1,0 +1,13 @@
+name: Availability
+path: /availability
+
+routes:
+  - upstream: /
+    method: GET
+    use: downstream
+    downstream: availability-service
+  
+services:
+  availability-service:
+    url: localhost:5001
+#    url: localhost:9999/availability-service
