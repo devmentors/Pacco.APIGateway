@@ -5,6 +5,7 @@ modules_path: Modules-async
 settings_path: Settings
 payloads_folder: Payloads
 forward_request_headers: true
+forward_response_headers: true
 
 resource_id:
   property: id

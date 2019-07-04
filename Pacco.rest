@@ -1,5 +1,5 @@
 @api = http://localhost:5000
-@token = xxx.xxx.xxx
+@accessToken = xxx.xxx.xxx
 @customerId = 00000000-0000-0000-0000-000000000000
 @parcelId = 00000000-0000-0000-0000-000000000000
 @orderId = 00000000-0000-0000-0000-000000000000
@@ -29,24 +29,24 @@ Content-Type: application/json
 
 ### GET me
 GET {{api}}/identity/me
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 
 # ============== CUSTOMERS ==================== #
 
 ### GET customers/me
 GET {{api}}/customers/me
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 
 ### GET customers (admin)
 GET {{api}}/customers
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 
 ### POST customers
 POST {{api}}/customers
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -71,15 +71,15 @@ GET {{api}}/operations/{{operationId}}
 
 ###
 GET {{api}}/orders
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 ###
 GET {{api}}/orders/{{orderId}}
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 ###
 POST {{api}}/orders
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -87,11 +87,11 @@ Content-Type: application/json
 
 ###
 DELETE {{api}}/orders/{{orderId}}
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 ###
 POST {{api}}/orders/{{orderId}}/parcels
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -101,7 +101,7 @@ Content-Type: application/json
 
 ###
 POST {{api}}/orders/{{orderId}}/vehicles
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -111,21 +111,21 @@ Content-Type: application/json
 
 ###
 DELETE {{api}}/orders/{{orderId}}/parcels/{{parcelId}}
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 # ============== PARCELS ==================== #
 
 ###
 GET {{api}}/parcels
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 ###
 GET {{api}}/parcels/{{parcelId}}
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 ###
 POST {{api}}/parcels
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -137,7 +137,7 @@ Content-Type: application/json
 
 ###
 DELETE {{api}}/parcels/{{parcelId}}
-Authorization: Bearer {{token}}
+Authorization: Bearer {{accessToken}}
 
 # ============== PRICING ==================== #
 
