@@ -49,5 +49,5 @@ modules:
   - upstream: /
     method: GET
     use: return_value
-    return_value: Welcome to Pacco API!
+    return_value: Welcome to Pacco API [async]!
     auth: false

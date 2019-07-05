@@ -31,6 +31,7 @@ routes:
   routing_key: orders.delete_order
   bind:
     - id:{id}
+    - customerId:@user_id
   
 - upstream: /{orderId}/parcels
   method: POST
@@ -40,6 +41,7 @@ routes:
   routing_key: orders.add_parcel_to_order
   bind:
     - orderId:{orderId}
+    - customerId:@user_id
   
 - upstream: /{orderId}/parcels/{parcelId}
   method: DELETE
@@ -50,6 +52,7 @@ routes:
   bind:
     - orderId:{orderId}
     - parcelId:{parcelId}
+    - customerId:@user_id
   
 - upstream: /{orderId}/vehicles
   method: POST
@@ -59,6 +62,7 @@ routes:
   routing_key: orders.assign_vehicle_to_order
   bind:
     - orderId:{orderId}
+    - customerId:@user_id
   
 services:
   orders-service:

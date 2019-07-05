@@ -37,6 +37,7 @@ routes:
   routing_key: parcels.delete_parcel
   bind:
     - id:{id}
+    - customerId:@user_id
   
 services:
   parcels-service:
