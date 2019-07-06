@@ -12,24 +12,27 @@ routes:
   method: POST
   auth: true
   use: dispatcher
-  exchange: resources
-  routing_key: resources.add_resource
+  exchange: availability
+  routing_key: availability.add_resource
+  generate_resource_id: false
 
 - upstream: /resources/{id}/reservations
   method: POST
   auth: true
   use: dispatcher
-  exchange: resources
-  routing_key: resources.reserve_resource
+  exchange: availability
+  routing_key: availability.reserve_resource
+  generate_resource_id: false
   bind:
     - id:{id}
 
-- upstream: /resources/{id}/reservations/reservations/{{dateTime}}
+- upstream: /resources/{id}/reservations/{dateTime}
   method: DELETE
   auth: true
   use: dispatcher
-  exchange: resources
-  routing_key: resources.release_resource
+  exchange: availability
+  routing_key: availability.release_resource
+  generate_resource_id: false
   bind:
     - id:{id}
     - dateTime:{dateTime}
@@ -38,8 +41,9 @@ routes:
   method: DELETE
   auth: true
   use: dispatcher
-  exchange: resources
-  routing_key: resources.delete_resource
+  exchange: availability
+  routing_key: availability.delete_resource
+  generate_resource_id: false
   bind:
     - id:{id}
 

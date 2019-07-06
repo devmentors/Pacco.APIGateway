@@ -1,5 +1,5 @@
 @api = http://localhost:5000
-@accessToken = xxx.xxx.xxx
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNjA5MzNiZmRhMzA0NDM0YjJiOGM0NmE0NjhhNDhjNyIsInVuaXF1ZV9uYW1lIjoiMTYwOTMzYmZkYTMwNDQzNGIyYjhjNDZhNDY4YTQ4YzciLCJqdGkiOiI4ZWQzMjA5My03YjhiLTQ4YWQtYTczOS02NDZjNjMzZTVmYjQiLCJpYXQiOiIxNTYyNDIzODI3NzYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsIm5iZiI6MTU2MjQyMzgyNywiZXhwIjoxNTYyNDI3NDI3LCJpc3MiOiJwYWNjbyJ9.OUO0WtBlwZHmvUZwTlwCWDO-k9dYa645yruaDoUjgMw
 @customerId = 00000000-0000-0000-0000-000000000000
 @operationId = 00000000-0000-0000-0000-000000000000
 @parcelId = 00000000-0000-0000-0000-000000000000
@@ -8,7 +8,8 @@
 @resourceId = 00000000-0000-0000-0000-000000000000
 @deliveryId = 00000000-0000-0000-0000-000000000000
 @dateTime = 2019-10-10
-@orderPrice = 0
+@deliveryDate = 2019-10-10
+@orderPrice = 100
 
 
 # ============== IDENTITY ==================== #
@@ -49,7 +50,7 @@ GET {{api}}/customers
 Authorization: Bearer {{accessToken}}
 
 
-### POST customers
+### POST customersa994fddb-926c-4fdf-8c90-840175c59426
 POST {{api}}/customers
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
@@ -80,7 +81,6 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "id": "{{resourceId}}",
   "dateTime": "{{dateTime}}",
   "priority": 0
 }
@@ -97,9 +97,11 @@ Authorization: Bearer {{accessToken}}
 
 ###
 GET {{api}}/deliveries/{{orderId}}
+Authorization: Bearer {{accessToken}}
 
 ###
 POST {{api}}/deliveries
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -110,6 +112,7 @@ Content-Type: application/json
 
 ###
 POST {{api}}/deliveries/{{deliveryId}}/fail
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -119,6 +122,7 @@ Content-Type: application/json
 
 ###
 POST {{api}}/deliveries/{{deliveryId}}/complete
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -127,6 +131,7 @@ Content-Type: application/json
 
 ###
 POST {{api}}/deliveries/{{deliveryId}}/registrations
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -171,18 +176,17 @@ Content-Type: application/json
 }
 
 ###
-POST {{api}}/orders/{{orderId}}/vehicles
+POST {{api}}/orders/{{orderId}}/vehicles/{{vehicleId}}
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "orderId": "{{orderId}}",
-  "vehicleId": "{{vehicleId}}"
+  "deliveryDate": "{{deliveryDate}}"
 }
 
 ###
 DELETE {{api}}/orders/{{orderId}}/parcels/{{parcelId}}
-Authorization: Bearer {{accessToken}}
+AuthorizatiOrderDiscountPriceon: Bearer {{accessToken}}
 
 # ============== PARCELS ==================== #
 
@@ -196,6 +200,7 @@ Authorization: Bearer {{accessToken}}
 
 ###
 GET {{api}}/parcels/volume?parcelIds=["{{parcelId}}"]
+Authorization: Bearer {{accessToken}}
 
 ###
 POST {{api}}/parcels
@@ -223,16 +228,18 @@ Authorization: Bearer {{accessToken}}
 
 ###
 GET {{api}}/vehicles?payloadCapacity=0&loadingCapacity=0&variants=1
+Authorization: Bearer {{accessToken}}
 
 ###
 GET {{api}}/vehicles/{{vehicleId}}
+Authorization: Bearer {{accessToken}}
 
 ###
 POST {{api}}/vehicles
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "id": "{{vehicleId}}",
   "brand": "Brand",
   "model": "Model",
   "description": "Vehicle description",
@@ -244,6 +251,7 @@ Content-Type: application/json
 
 ###
 PUT {{api}}/vehicles/{{vehicleId}}
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {

@@ -44,12 +44,14 @@ routes:
   downstream: orders-service/orders/{orderId}/parcels/{parcelId}?customerId=@user_id
   auth: true
 
-- upstream: /{orderId}/vehicles
+- upstream: /{orderId}/vehicles/{vehicleId}
   method: POST
   use: downstream
-  downstream: orders-service/orders/{orderId}/vehicles
+  downstream: orders-service/orders/{orderId}/vehicles/{vehicleId}
   auth: true
   bind:
+    - orderId:{orderId}
+    - vehicleId:{vehicleId}
     - customerId:@user_id
   
 services:

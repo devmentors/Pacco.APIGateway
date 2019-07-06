@@ -33,7 +33,7 @@ routes:
     - id:{id}
     - customerId:@user_id
   
-- upstream: /{orderId}/parcels
+- upstream: /{orderId}/parcels/{parcelId}
   method: POST
   auth: true
   use: dispatcher
@@ -41,6 +41,7 @@ routes:
   routing_key: orders.add_parcel_to_order
   bind:
     - orderId:{orderId}
+    - parcelId:{parcelId}
     - customerId:@user_id
   
 - upstream: /{orderId}/parcels/{parcelId}
@@ -54,7 +55,7 @@ routes:
     - parcelId:{parcelId}
     - customerId:@user_id
   
-- upstream: /{orderId}/vehicles
+- upstream: /{orderId}/vehicles/{vehicleId}
   method: POST
   auth: true
   use: dispatcher
@@ -62,6 +63,7 @@ routes:
   routing_key: orders.assign_vehicle_to_order
   bind:
     - orderId:{orderId}
+    - vehicleId:{vehicleId}
     - customerId:@user_id
   
 services:
