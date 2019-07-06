@@ -1,10 +1,15 @@
 @api = http://localhost:5000
 @accessToken = xxx.xxx.xxx
 @customerId = 00000000-0000-0000-0000-000000000000
+@operationId = 00000000-0000-0000-0000-000000000000
 @parcelId = 00000000-0000-0000-0000-000000000000
 @orderId = 00000000-0000-0000-0000-000000000000
 @vehicleId = 00000000-0000-0000-0000-000000000000
-@operationId = 00000000-0000-0000-0000-000000000000
+@resourceId = 00000000-0000-0000-0000-000000000000
+@deliveryId = 00000000-0000-0000-0000-000000000000
+@dateTime = 2019-10-10
+@orderPrice = 0
+
 
 # ============== IDENTITY ==================== #
 
@@ -56,11 +61,79 @@ Content-Type: application/json
 
 # ============== AVAILABILITY ==================== #
 
+###
+GET {{api}}/availability/resources/{{resourceId}}
+Authorization: Bearer {{accessToken}}
 
+###
+POST {{api}}/availability/resources
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "id": "{{resourceId}}"
+}
+
+###
+POST {{api}}/availability/resources/{{resourceId}}/reservations
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "id": "{{resourceId}}",
+  "dateTime": "{{dateTime}}",
+  "priority": 0
+}
+
+###
+DELETE {{api}}/availability/resources/{{resourceId}}/reservations/{{dateTime}}
+Authorization: Bearer {{accessToken}}
+
+###
+DELETE {{api}}/availability/resources/{{resourceId}}
+Authorization: Bearer {{accessToken}}
 
 # ============== DELIVERIES ==================== #
 
+###
+GET {{api}}/deliveries/{{orderId}}
 
+###
+POST {{api}}/deliveries
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "description": "Delivery description",
+  "dateTime": "2019-10-10"
+}
+
+###
+POST {{api}}/deliveries/{{deliveryId}}/fail
+Content-Type: application/json
+
+{
+  "id": "{{deliveryId}}",
+  "reason": "Delivery failed"
+}
+
+###
+POST {{api}}/deliveries/{{deliveryId}}/complete
+Content-Type: application/json
+
+{
+  "id": "{{deliveryId}}"
+}
+
+###
+POST {{api}}/deliveries/{{deliveryId}}/registrations
+Content-Type: application/json
+
+{
+  "id": "{{deliveryId}}",
+  "description": "Delivery registration description",
+  "dateTime": "2019-10-10"
+}
 
 # ============== OPERATIONS ==================== #
 
@@ -90,13 +163,11 @@ DELETE {{api}}/orders/{{orderId}}
 Authorization: Bearer {{accessToken}}
 
 ###
-POST {{api}}/orders/{{orderId}}/parcels
+POST {{api}}/orders/{{orderId}}/parcels/{{parcelId}}
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "orderId": "{{orderId}}",
-  "parcelId": "{{parcelId}}"
 }
 
 ###
@@ -124,6 +195,9 @@ GET {{api}}/parcels/{{parcelId}}
 Authorization: Bearer {{accessToken}}
 
 ###
+GET {{api}}/parcels/volume?parcelIds=["{{parcelId}}"]
+
+###
 POST {{api}}/parcels
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
@@ -141,6 +215,43 @@ Authorization: Bearer {{accessToken}}
 
 # ============== PRICING ==================== #
 
-
+###
+GET {{api}}/pricing?orderPrice={{orderPrice}}
+Authorization: Bearer {{accessToken}}
 
 # ============== VEHICLES ==================== #
+
+###
+GET {{api}}/vehicles?payloadCapacity=0&loadingCapacity=0&variants=1
+
+###
+GET {{api}}/vehicles/{{vehicleId}}
+
+###
+POST {{api}}/vehicles
+Content-Type: application/json
+
+{
+  "id": "{{vehicleId}}",
+  "brand": "Brand",
+  "model": "Model",
+  "description": "Vehicle description",
+  "payloadCapacity": 1000,
+  "loadingCapacity": 1000,
+  "pricePerService": 100,
+  "variants": 1
+}
+
+###
+PUT {{api}}/vehicles/{{vehicleId}}
+Content-Type: application/json
+
+{
+  "id": "{{vehicleId}}",
+  "description": "Updated vehicle description",
+  "pricePerService": 150,
+  "variants": 2
+}
+
+###
+DELETE {{api}}/vehicles/{{vehicleId}}

@@ -25,27 +25,25 @@ routes:
 - upstream: /{id}
   method: DELETE
   use: downstream
-  downstream: orders-service/orders/{id}
+  downstream: orders-service/orders/{id}?customerId=@user_id
   auth: true
-  bind:
-    - customerId:@user_id
-  
-- upstream: /{orderId}/parcels
-  method: POST
-  use: downstream
-  downstream: orders-service/orders/{orderId}/parcels
-  auth: true
-  bind:
-    - customerId:@user_id
   
 - upstream: /{orderId}/parcels/{parcelId}
-  method: DELETE
+  method: POST
   use: downstream
   downstream: orders-service/orders/{orderId}/parcels/{parcelId}
   auth: true
   bind:
     - customerId:@user_id
+    - orderId:{orderId}
+    - parcelId:{parcelId}
   
+- upstream: /{orderId}/parcels/{parcelId}
+  method: DELETE
+  use: downstream
+  downstream: orders-service/orders/{orderId}/parcels/{parcelId}?customerId=@user_id
+  auth: true
+
 - upstream: /{orderId}/vehicles
   method: POST
   use: downstream

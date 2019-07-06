@@ -2,11 +2,47 @@ name: Availability
 path: /availability
 
 routes:
-  - upstream: /
-    method: GET
-    use: downstream
-    downstream: availability-service
-  
+- upstream: /resources/{id}
+  method: GET
+  use: downstream
+  downstream: availability-service/resources/{id}
+  auth: true
+
+- upstream: /resources
+  method: POST
+  auth: true
+  use: dispatcher
+  exchange: resources
+  routing_key: resources.add_resource
+
+- upstream: /resources/{id}/reservations
+  method: POST
+  auth: true
+  use: dispatcher
+  exchange: resources
+  routing_key: resources.reserve_resource
+  bind:
+    - id:{id}
+
+- upstream: /resources/{id}/reservations/reservations/{{dateTime}}
+  method: DELETE
+  auth: true
+  use: dispatcher
+  exchange: resources
+  routing_key: resources.release_resource
+  bind:
+    - id:{id}
+    - dateTime:{dateTime}
+
+- upstream: /resources/{id}
+  method: DELETE
+  auth: true
+  use: dispatcher
+  exchange: resources
+  routing_key: resources.delete_resource
+  bind:
+    - id:{id}
+
 services:
   availability-service:
     url: localhost:5001

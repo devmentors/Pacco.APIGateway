@@ -8,33 +8,39 @@ routes:
   downstream: deliveries-service/deliveries/{orderId}
   auth: true
 
-- upstream: /{orderId}/start
+- upstream: /
   method: POST
   auth: true
   use: dispatcher
   exchange: deliveries
   routing_key: deliveries.start_delivery
 
-- upstream: /{orderId}/fail
+- upstream: /{deliveryId}/fail
   method: POST
   auth: true
   use: dispatcher
   exchange: deliveries
   routing_key: deliveries.fail_delivery
+  bind:
+    - id:{deliveryId}
 
-- upstream: /{orderId}/complete
+- upstream: /{deliveryId}/complete
   method: POST
   auth: true
   use: dispatcher
   exchange: deliveries
   routing_key: deliveries.complete_delivery
+  bind:
+    - id:{deliveryId}
 
-- upstream: /{id}/registrations
+- upstream: /{deliveryId}/registrations
   method: POST
   auth: true
   use: dispatcher
   exchange: deliveries
   routing_key: deliveries.add_delivery_registration
+  bind:
+    - id:{deliveryId}
   
 services:
   deliveries-service:

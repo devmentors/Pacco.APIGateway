@@ -7,6 +7,14 @@ routes:
   use: downstream
   downstream: vehicles-service/vehicles
   auth: true
+  on_success:
+    data: response.data.items
+
+- upstream: /{id}
+  method: GET
+  use: downstream
+  downstream: vehicles-service/vehicles/{id}
+  auth: true
 
 - upstream: /
   method: POST
