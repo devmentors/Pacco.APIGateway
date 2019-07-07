@@ -2,12 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>Pacco.APIGateway</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Ntrada_" Version="1.0.9" />
     <PackageReference Include="Ntrada.Extensions.RabbitMq_" Version="1.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ntrada.yml" />
+    <Content Include="ntrada.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="ntrada-async.yml" />
+    <Content Include="ntrada-async.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
