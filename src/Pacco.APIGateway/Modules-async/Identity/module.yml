@@ -19,6 +19,8 @@ routes:
   use: downstream
   downstream: identity-service/sign-in
   auth: false
+  response_headers:
+    content-type: application/json
   
 services:
   identity-service:

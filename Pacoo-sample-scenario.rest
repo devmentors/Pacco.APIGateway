@@ -1,0 +1,193 @@
+@api = http://localhost:5000
+
+### At first, create an account
+POST {{api}}/identity/sign-up
+Content-Type: application/json
+
+{
+  "email": "pacco-user1@mailinator.com",
+  "password": "secret",
+  "role": "user"
+}
+
+### Authenticate and grab the access token
+# @name sign_in
+POST {{api}}/identity/sign-in
+Content-Type: application/json
+
+{
+  "email": "pacco-user1@mailinator.com",
+  "password": "secret"
+}
+
+@accessToken = {{sign_in.response.body.$.accessToken}}
+
+### Get your user account details
+GET {{api}}/identity/me
+Authorization: Bearer {{accessToken}}
+
+### Complete the customer account registration
+POST {{api}}/customers
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "address": "New York"
+}
+
+### Get your customer account details
+GET {{api}}/customers/me
+Authorization: Bearer {{accessToken}}
+
+### Add a parcel and grab its id
+# @name add_parcel
+POST {{api}}/parcels
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "variant": "weapon",
+  "size": "large",
+  "name": "Parcel #1",
+  "description": "My parcel #1"
+}
+
+@parcelId = {{add_parcel.response.headers.Resource-ID}}
+
+### Get your parcels
+GET {{api}}/parcels
+Authorization: Bearer {{accessToken}}
+
+### Calculate the parcel volume to see whether it works as expected
+GET {{api}}/parcels/volume?parcelIds=["{{parcelId}}"]
+Authorization: Bearer {{accessToken}}
+
+### Create a new order and grab its id
+# @name create_order
+POST {{api}}/orders
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+}
+
+@orderId = {{create_order.response.headers.Resource-ID}}
+
+### Get your orders
+GET {{api}}/orders
+Authorization: Bearer {{accessToken}}
+
+### Add a parcel to the order
+POST {{api}}/orders/{{orderId}}/parcels/{{parcelId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+}
+
+### Get your order details which should now contain a package
+GET {{api}}/orders/{{orderId}}
+Authorization: Bearer {{accessToken}}
+
+### Add a new vehicle
+# @name add_vehicle
+POST {{api}}/vehicles
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "brand": "Brand",
+  "model": "Model",
+  "description": "Vehicle description",
+  "payloadCapacity": 1000,
+  "loadingCapacity": 1000,
+  "pricePerService": 100,
+  "variants": 1
+}
+
+@vehicleId = {{add_vehicle.response.headers.Resource-ID}}
+
+### Get a newly added vehicle
+GET {{api}}/vehicles?payloadCapacity=0&loadingCapacity=0&variants=1
+Authorization: Bearer {{accessToken}}
+
+### Add a vehicle as the available resource being able to deliver the pacakge
+@resourceId = {{add_vehicle.response.headers.Resource-ID}}
+
+POST {{api}}/availability/resources
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "id": "{{resourceId}}"
+}
+
+### Assign a vehicle to your order and set the desired delivery date
+@deliveryDate = 2019-10-10
+
+POST {{api}}/orders/{{orderId}}/vehicles/{{vehicleId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "deliveryDate": "{{deliveryDate}}"
+}
+
+### Make a reservation for the given date to deliver the package
+POST {{api}}/availability/resources/{{resourceId}}/reservations
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "dateTime": "{{deliveryDate}}",
+  "priority": 0
+}
+
+### Ensure that resource was reserved for the chosen date
+GET {{api}}/availability/resources/{{resourceId}}
+Authorization: Bearer {{accessToken}}
+
+
+### Start the delivery and grab its id
+# @name start_delivery
+POST {{api}}/deliveries
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "description": "Delivery description",
+  "dateTime": "{{deliveryDate}}"
+}
+
+@deliveryId = {{start_delivery.response.headers.Resource-ID}}
+
+
+### Add some internal delivery transportation details
+POST {{api}}/deliveries/{{deliveryId}}/registrations
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "id": "{{deliveryId}}",
+  "description": "Delivery registration description",
+  "dateTime": "{{deliveryDate}}"
+}
+
+### Complete the delivery
+POST {{api}}/deliveries/{{deliveryId}}/complete
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "id": "{{deliveryId}}"
+}
+
+### Check the delivery details
+GET {{api}}/deliveries/{{orderId}}
+Authorization: Bearer {{accessToken}}
+
+### Get your order details which should now be marked as completed
+GET {{api}}/orders/{{orderId}}
+Authorization: Bearer {{accessToken}}

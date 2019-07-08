@@ -50,7 +50,7 @@ GET {{api}}/customers
 Authorization: Bearer {{accessToken}}
 
 
-### POST customersa994fddb-926c-4fdf-8c90-840175c59426
+### POST customers
 POST {{api}}/customers
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
