@@ -26,7 +26,7 @@ Content-Type: application/json
 GET {{api}}/identity/me
 Authorization: Bearer {{accessToken}}
 
-### Complete the customer account registration
+### Complete the customer registration process
 POST {{api}}/customers
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json

@@ -2,26 +2,35 @@ name: Identity
 path: /identity
 
 routes:
-- upstream: /me
-  method: GET
-  use: downstream
-  downstream: identity-service/me
-  auth: true
+  - upstream: /users/{id}
+    method: GET
+    use: downstream
+    downstream: identity-service/users/{id}
+    auth: true
+    claims:
+      role: admin
 
-- upstream: /sign-up
-  method: POST
-  use: downstream
-  downstream: identity-service/sign-up
-  auth: false
+  - upstream: /me
+    method: GET
+    use: downstream
+    downstream: identity-service/me
+    auth: true
 
-- upstream: /sign-in
-  method: POST
-  use: downstream
-  downstream: identity-service/sign-in
-  auth: false
-  response_headers:
-    content-type: application/json
-  
+  - upstream: /sign-up
+    method: POST
+    auth: false
+    use: dispatcher
+    exchange: identity
+    routing_key: identity.sign_up
+
+  - upstream: /sign-in
+    method: POST
+    auth: false
+    use: downstream
+    downstream: identity-service/sign-in
+    response_headers:
+      content-type: application/json
+
 services:
   identity-service:
     url: localhost:5004

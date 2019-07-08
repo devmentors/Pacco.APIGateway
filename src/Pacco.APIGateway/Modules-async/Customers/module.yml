@@ -21,11 +21,11 @@ routes:
   auth: true
   use: dispatcher
   exchange: customers
-  routing_key: customers.create_customer
+  routing_key: customers.complete_customer_registration
   bind:
     - id:@user_id
-  payload: create_customer
-  schema: create_customer.schema
+  payload: complete_customer_registration
+  schema: complete_customer_registration.schema
   
 services:
   customers-service:
