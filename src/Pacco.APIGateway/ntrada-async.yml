@@ -1,4 +1,5 @@
 use_error_handler: true
+use_jaeger: true
 use_forwarded_headers: true
 pass_query_string: true
 modules_path: Modules-async

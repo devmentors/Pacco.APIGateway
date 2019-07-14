@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ntrada_" Version="1.1.4" />
-    <PackageReference Include="Ntrada.Extensions.RabbitMq_" Version="1.0.5" />
+    <PackageReference Include="Ntrada_" Version="1.1.5" />
+    <PackageReference Include="Ntrada.Extensions.RabbitMq_" Version="1.0.6" />
+    <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.6.0" />
   </ItemGroup>
 
   <ItemGroup>
