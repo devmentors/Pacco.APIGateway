@@ -23,6 +23,12 @@
     <Content Include="ntrada-async.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Modules\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Modules-async\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>    
   </ItemGroup>
 
 </Project>
