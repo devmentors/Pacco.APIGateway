@@ -9,13 +9,19 @@
   <ItemGroup>
     <PackageReference Include="Convey.Logging" Version="0.0.*" />
     <PackageReference Include="Convey.Metrics.AppMetrics" Version="0.0.*" />
-    <PackageReference Include="Ntrada_" Version="1.1.5" />
+    <PackageReference Include="Ntrada_" Version="1.1.6" />
     <PackageReference Include="Ntrada.Extensions.RabbitMq_" Version="1.0.6" />
     <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ntrada.yml" />
+    <Content Include="ntrada-async.docker.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ntrada.docker.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ntrada.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

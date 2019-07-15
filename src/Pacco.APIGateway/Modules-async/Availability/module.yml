@@ -49,5 +49,5 @@ routes:
 
 services:
   availability-service:
-    url: localhost:5001
-#    url: localhost:9999/availability-service
+    local_url: localhost:5001
+    url: load_balancer/availability-service

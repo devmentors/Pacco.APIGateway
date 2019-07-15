@@ -36,5 +36,5 @@ routes:
   
 services:
   parcels-service:
-    url: localhost:5007
-#    url: localhost:9999/parcels-service
+    local_url: localhost:5007
+    url: load_balancer/parcels-service

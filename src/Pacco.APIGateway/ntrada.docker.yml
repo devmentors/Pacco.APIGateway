@@ -6,10 +6,10 @@ modules_path: Modules
 payloads_folder: Payloads
 forward_request_headers: true
 forward_response_headers: true
-use_local_url: true
+use_local_url: false
 load_balancer:
-  enabled: false
-  url: localhost:9999
+  enabled: true
+  url: fabio:9999
 
 resource_id:
   property: id

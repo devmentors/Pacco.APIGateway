@@ -43,5 +43,5 @@ routes:
   
 services:
   vehicles-service:
-    url: localhost:5009
-#    url: localhost:9999/vehicles-service
+    local_url: localhost:5009
+    url: load_balancer/vehicles-service
