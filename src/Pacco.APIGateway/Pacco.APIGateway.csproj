@@ -10,7 +10,7 @@
     <PackageReference Include="Convey.Logging" Version="0.0.*" />
     <PackageReference Include="Convey.Metrics.AppMetrics" Version="0.0.*" />
     <PackageReference Include="Ntrada_" Version="1.1.6" />
-    <PackageReference Include="Ntrada.Extensions.RabbitMq_" Version="1.0.6" />
+    <PackageReference Include="Ntrada.Extensions.RabbitMq_" Version="1.0.7" />
     <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.6.0" />
   </ItemGroup>
 

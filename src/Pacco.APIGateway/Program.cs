@@ -4,6 +4,7 @@ using Convey.Logging;
 using Convey.Metrics.AppMetrics;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ntrada;
 using Ntrada.Extensions.RabbitMq;

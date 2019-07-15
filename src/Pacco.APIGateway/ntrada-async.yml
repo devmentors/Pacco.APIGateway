@@ -46,7 +46,6 @@ auth:
 extensions:
  dispatcher:
    use: rabbitmq
-   settings: rabbitmq
 
 modules:
 - name: home
