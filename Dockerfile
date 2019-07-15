@@ -8,4 +8,5 @@ WORKDIR /app
 COPY --from=build /app/src/Pacco.APIGateway/out .
 ENV ASPNETCORE_URLS http://*:5000
 ENV ASPNETCORE_ENVIRONMENT docker
+ENV NTRADA_CONFIG ntrada.docker
 ENTRYPOINT dotnet Pacco.APIGateway.dll
