@@ -19,9 +19,10 @@ routes:
   - upstream: /sign-up
     method: POST
     auth: false
-    use: dispatcher
-    exchange: identity
-    routing_key: identity.sign_up
+    use: message_broker
+    config:
+      exchange: identity
+      routing_key: identity.sign_up
 
   - upstream: /sign-in
     method: POST

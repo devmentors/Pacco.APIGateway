@@ -4,10 +4,10 @@ using Convey.Logging;
 using Convey.Metrics.AppMetrics;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ntrada;
-using Ntrada.Extensions.RabbitMq;
+using Ntrada.Handlers.RabbitMq;
+using Pacco.APIGateway.Infrastructure;
 
 namespace Pacco.APIGateway
 {
@@ -17,11 +17,14 @@ namespace Pacco.APIGateway
             => await WebHost.CreateDefaultBuilder(args)
                 .ConfigureServices(services => services
                     .AddOpenTracing()
+                    .AddSingleton<IContextBuilder, CorrelationContextBuilder>()
+                    .AddRabbitMq<CorrelationContext>()
+                    .AddNtrada()
                     .AddConvey()
-                    .AddMetrics()
-                    .Build())
-                .UseNtrada()
-                .UseRabbitMq()
+                    .AddMetrics())
+                .Configure(app => app
+                    .UseRabbitMq()
+                    .UseNtrada())
                 .UseLogging()
                 .Build()
                 .RunAsync();

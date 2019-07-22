@@ -11,17 +11,19 @@ routes:
 - upstream: /resources
   method: POST
   auth: true
-  use: dispatcher
-  exchange: availability
-  routing_key: availability.add_resource
+  use: message_broker
+  config:
+    exchange: availability
+    routing_key: availability.add_resource
   generate_resource_id: false
 
 - upstream: /resources/{id}/reservations
   method: POST
   auth: true
-  use: dispatcher
-  exchange: availability
-  routing_key: availability.reserve_resource
+  use: message_broker
+  config:
+    exchange: availability
+    routing_key: availability.reserve_resource
   generate_resource_id: false
   bind:
     - id:{id}
@@ -29,9 +31,10 @@ routes:
 - upstream: /resources/{id}/reservations/{dateTime}
   method: DELETE
   auth: true
-  use: dispatcher
-  exchange: availability
-  routing_key: availability.release_resource
+  use: message_broker
+  config:
+    exchange: availability
+    routing_key: availability.release_resource
   generate_resource_id: false
   bind:
     - id:{id}
@@ -40,9 +43,10 @@ routes:
 - upstream: /resources/{id}
   method: DELETE
   auth: true
-  use: dispatcher
-  exchange: availability
-  routing_key: availability.delete_resource
+  use: message_broker
+  config:
+    exchange: availability
+    routing_key: availability.delete_resource
   generate_resource_id: false
   bind:
     - id:{id}

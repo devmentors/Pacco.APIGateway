@@ -11,34 +11,38 @@ routes:
 - upstream: /
   method: POST
   auth: true
-  use: dispatcher
-  exchange: deliveries
-  routing_key: deliveries.start_delivery
+  use: message_broker
+  config:
+    exchange: deliveries
+    routing_key: deliveries.start_delivery
 
 - upstream: /{deliveryId}/fail
   method: POST
   auth: true
-  use: dispatcher
-  exchange: deliveries
-  routing_key: deliveries.fail_delivery
+  use: message_broker
+  config:
+    exchange: deliveries
+    routing_key: deliveries.fail_delivery
   bind:
     - id:{deliveryId}
 
 - upstream: /{deliveryId}/complete
   method: POST
   auth: true
-  use: dispatcher
-  exchange: deliveries
-  routing_key: deliveries.complete_delivery
+  use: message_broker
+  config:
+    exchange: deliveries
+    routing_key: deliveries.complete_delivery
   bind:
     - id:{deliveryId}
 
 - upstream: /{deliveryId}/registrations
   method: POST
   auth: true
-  use: dispatcher
-  exchange: deliveries
-  routing_key: deliveries.add_delivery_registration
+  use: message_broker
+  config:
+    exchange: deliveries
+    routing_key: deliveries.add_delivery_registration
   bind:
     - id:{deliveryId}
   

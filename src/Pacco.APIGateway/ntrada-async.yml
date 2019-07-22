@@ -6,6 +6,8 @@ modules_path: Modules-async
 payloads_folder: Payloads
 forward_request_headers: true
 forward_response_headers: true
+generate_request_id: true
+generate_trace_id: true
 use_local_url: true
 load_balancer:
   enabled: false
@@ -44,7 +46,7 @@ auth:
     role: http://schemas.microsoft.com/ws/2008/06/identity/claims/role
 
 extensions:
- dispatcher:
+ message_broker:
    use: rabbitmq
 
 modules:

@@ -19,9 +19,10 @@ routes:
 - upstream: /
   method: POST
   auth: true
-  use: dispatcher
-  exchange: customers
-  routing_key: customers.complete_customer_registration
+  use: message_broker
+  config:
+    exchange: customers
+    routing_key: customers.complete_customer_registration
   bind:
     - id:@user_id
   payload: complete_customer_registration

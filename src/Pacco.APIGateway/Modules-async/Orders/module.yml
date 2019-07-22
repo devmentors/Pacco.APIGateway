@@ -17,18 +17,20 @@ routes:
 - upstream: /
   method: POST
   auth: true
-  use: dispatcher
-  exchange: orders
-  routing_key: orders.create_order
+  use: message_broker
+  config:
+    exchange: orders
+    routing_key: orders.create_order
   bind:
     - customerId:@user_id
 
 - upstream: /{id}
   method: DELETE
   auth: true
-  use: dispatcher
-  exchange: orders
-  routing_key: orders.delete_order
+  use: message_broker
+  config:
+    exchange: orders
+    routing_key: orders.delete_order
   bind:
     - id:{id}
     - customerId:@user_id
@@ -36,9 +38,10 @@ routes:
 - upstream: /{orderId}/parcels/{parcelId}
   method: POST
   auth: true
-  use: dispatcher
-  exchange: orders
-  routing_key: orders.add_parcel_to_order
+  use: message_broker
+  config:
+    exchange: orders
+    routing_key: orders.add_parcel_to_order
   bind:
     - orderId:{orderId}
     - parcelId:{parcelId}
@@ -47,9 +50,10 @@ routes:
 - upstream: /{orderId}/parcels/{parcelId}
   method: DELETE
   auth: true
-  use: dispatcher
-  exchange: orders
-  routing_key: orders.delete_parcel_from_order
+  use: message_broker
+  config:
+    exchange: orders
+    routing_key: orders.delete_parcel_from_order
   bind:
     - orderId:{orderId}
     - parcelId:{parcelId}
@@ -58,9 +62,10 @@ routes:
 - upstream: /{orderId}/vehicles/{vehicleId}
   method: POST
   auth: true
-  use: dispatcher
-  exchange: orders
-  routing_key: orders.assign_vehicle_to_order
+  use: message_broker
+  config:
+    exchange: orders
+    routing_key: orders.assign_vehicle_to_order
   bind:
     - orderId:{orderId}
     - vehicleId:{vehicleId}

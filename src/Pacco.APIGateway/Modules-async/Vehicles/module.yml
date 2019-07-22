@@ -19,25 +19,28 @@ routes:
 - upstream: /
   method: POST
   auth: true
-  use: dispatcher
-  exchange: vehicles
-  routing_key: vehicles.add_vehicle
+  use: message_broker
+  config:
+    exchange: vehicles
+    routing_key: vehicles.add_vehicle
 
 - upstream: /{id}
   method: PUT
   auth: true
-  use: dispatcher
-  exchange: vehicles
-  routing_key: vehicles.update_vehicle
+  use: message_broker
+  config:
+    exchange: vehicles
+    routing_key: vehicles.update_vehicle
   bind:
     - id:{id}
 
 - upstream: /{id}
   method: DELETE
   auth: true
-  use: dispatcher
-  exchange: vehicles
-  routing_key: vehicles.delete_vehicle
+  use: message_broker
+  config:
+    exchange: vehicles
+    routing_key: vehicles.delete_vehicle
   bind:
     - id:{id}
   
