@@ -13,10 +13,6 @@ load_balancer:
   enabled: true
   url: fabio:9999
 
-resource_id:
-  property: id
-  generate: true
-
 cors:
   enabled: true
   headers:

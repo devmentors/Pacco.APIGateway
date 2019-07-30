@@ -8,10 +8,10 @@ routes:
   downstream: orders-service/orders?customerId=@user_id
   auth: true
 
-- upstream: /{id}
+- upstream: /{orderId}
   method: GET
   use: downstream
-  downstream: orders-service/orders/{id}
+  downstream: orders-service/orders/{orderId}
   auth: true
 
 - upstream: /
@@ -19,13 +19,16 @@ routes:
   use: downstream
   downstream: orders-service/orders
   auth: true
+  resource_id:
+    property: orderId
+    generate: true
   bind:
     - customerId:@user_id
 
-- upstream: /{id}
+- upstream: /{orderId}
   method: DELETE
   use: downstream
-  downstream: orders-service/orders/{id}?customerId=@user_id
+  downstream: orders-service/orders/{orderId}?customerId=@user_id
   auth: true
   
 - upstream: /{orderId}/parcels/{parcelId}

@@ -13,6 +13,9 @@ routes:
   use: downstream
   downstream: deliveries-service/deliveries
   auth: true
+  resource_id:
+    property: deliveryId
+    generate: true
 
 - upstream: /{deliveryId}/fail
   method: POST
@@ -20,7 +23,7 @@ routes:
   downstream: deliveries-service/deliveries/{deliveryId}/fail
   auth: true
   bind:
-    - id:{deliveryId}
+    - deliveryId:{deliveryId}
 
 - upstream: /{deliveryId}/complete
   method: POST
@@ -28,7 +31,7 @@ routes:
   downstream: deliveries-service/deliveries/{deliveryId}/complete
   auth: true
   bind:
-    - id:{deliveryId}
+    - deliveryId:{deliveryId}
 
 - upstream: /{deliveryId}/registrations
   method: POST
@@ -36,7 +39,7 @@ routes:
   downstream: deliveries-service/deliveries/{deliveryId}/registrations
   auth: true
   bind:
-    - id:{deliveryId}
+    - deliveryId:{deliveryId}
   
 services:
   deliveries-service:

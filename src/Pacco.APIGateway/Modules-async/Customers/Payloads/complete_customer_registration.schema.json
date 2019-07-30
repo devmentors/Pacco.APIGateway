@@ -5,15 +5,15 @@
   "type": "object",
   "title": "Complete customer registration schema",
   "required": [
-    "id",
+    "customerId",
     "fullName",
     "address"
   ],
   "properties": {
-    "id": {
-      "$id": "#/properties/id",
+    "customerId": {
+      "$id": "#/properties/customerId",
       "type": "string",
-      "title": "The Id Schema",
+      "title": "The CustomerId Schema",
       "default": "",
       "examples": [
         ""

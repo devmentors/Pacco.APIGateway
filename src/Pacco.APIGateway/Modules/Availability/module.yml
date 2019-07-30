@@ -2,10 +2,10 @@ name: Availability
 path: /availability
 
 routes:
-- upstream: /resources/{id}
+- upstream: /resources/{resourceId}
   method: GET
   use: downstream
-  downstream: availability-service/resources/{id}
+  downstream: availability-service/resources/{resourceId}
   auth: true
 
 - upstream: /resources
@@ -13,32 +13,31 @@ routes:
   use: downstream
   downstream: availability-service/resources
   auth: true
-  generate_resource_id: false
   
-- upstream: /resources/{id}/reservations
+- upstream: /resources/{resourceId}/reservations
   method: POST
   use: downstream
-  downstream: availability-service/resources/{id}/reservations
+  downstream: availability-service/resources/{resourceId}/reservations
   auth: true
   bind:
-    - id:{id}
+    - resourceId:{resourceId}
   
-- upstream: /resources/{id}/reservations/{dateTime}
+- upstream: /resources/{resourceId}/reservations/{dateTime}
   method: DELETE
   use: downstream
-  downstream: availability-service/resources/{id}/reservations/{dateTime}
+  downstream: availability-service/resources/{resourceId}/reservations/{dateTime}
   auth: true
   bind:
-    - id:{id}
+    - resourceId:{resourceId}
     - dateTime:{dateTime}
   
-- upstream: /resources/{id}
+- upstream: /resources/{resourceId}
   method: DELETE
   use: downstream
-  downstream: availability-service/resources/{id}
+  downstream: availability-service/resources/{resourceId}
   auth: true
   bind:
-    - id:{id}
+    - resourceId:{resourceId}
 
 services:
   availability-service:

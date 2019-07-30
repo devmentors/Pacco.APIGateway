@@ -8,15 +8,18 @@ routes:
   downstream: orders-service/orders?customerId=@user_id
   auth: true
 
-- upstream: /{id}
+- upstream: /{orderId}
   method: GET
   use: downstream
-  downstream: orders-service/orders/{id}
+  downstream: orders-service/orders/{orderId}
   auth: true
 
 - upstream: /
   method: POST
   auth: true
+  resource_id:
+    property: orderId
+    generate: true
   use: message_broker
   config:
     exchange: orders
@@ -24,7 +27,7 @@ routes:
   bind:
     - customerId:@user_id
 
-- upstream: /{id}
+- upstream: /{orderId}
   method: DELETE
   auth: true
   use: message_broker
@@ -32,7 +35,7 @@ routes:
     exchange: orders
     routing_key: orders.delete_order
   bind:
-    - id:{id}
+    - orderId:{orderId}
     - customerId:@user_id
   
 - upstream: /{orderId}/parcels/{parcelId}

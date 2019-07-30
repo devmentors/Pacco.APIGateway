@@ -2,10 +2,10 @@ name: Availability
 path: /availability
 
 routes:
-- upstream: /resources/{id}
+- upstream: /resources/{resourceId}
   method: GET
   use: downstream
-  downstream: availability-service/resources/{id}
+  downstream: availability-service/resources/{resourceId}
   auth: true
 
 - upstream: /resources
@@ -15,41 +15,37 @@ routes:
   config:
     exchange: availability
     routing_key: availability.add_resource
-  generate_resource_id: false
 
-- upstream: /resources/{id}/reservations
+- upstream: /resources/{resourceId}/reservations
   method: POST
   auth: true
   use: message_broker
   config:
     exchange: availability
     routing_key: availability.reserve_resource
-  generate_resource_id: false
   bind:
-    - id:{id}
+    - resourceId:{resourceId}
 
-- upstream: /resources/{id}/reservations/{dateTime}
+- upstream: /resources/{resourceId}/reservations/{dateTime}
   method: DELETE
   auth: true
   use: message_broker
   config:
     exchange: availability
     routing_key: availability.release_resource
-  generate_resource_id: false
   bind:
-    - id:{id}
+    - resourceId:{resourceId}
     - dateTime:{dateTime}
 
-- upstream: /resources/{id}
+- upstream: /resources/{resourceId}
   method: DELETE
   auth: true
   use: message_broker
   config:
     exchange: availability
     routing_key: availability.delete_resource
-  generate_resource_id: false
   bind:
-    - id:{id}
+    - resourceId:{resourceId}
 
 services:
   availability-service:

@@ -8,10 +8,10 @@ routes:
   downstream: parcels-service/parcels?customerId=@user_id
   auth: true
 
-- upstream: /{id}
+- upstream: /{parcelId}
   method: GET
   use: downstream
-  downstream: parcels-service/parcels/{id}
+  downstream: parcels-service/parcels/{parcelId}
   auth: true
 
 - upstream: /volume
@@ -23,6 +23,9 @@ routes:
 - upstream: /
   method: POST
   auth: true
+  resource_id:
+    property: parcelId
+    generate: true
   use: message_broker
   config:
     exchange: parcels
@@ -30,7 +33,7 @@ routes:
   bind:
     - customerId:@user_id
 
-- upstream: /{id}
+- upstream: /{parcelId}
   method: DELETE
   auth: true
   use: message_broker
@@ -38,7 +41,7 @@ routes:
     exchange: parcels
     routing_key: parcels.delete_parcel
   bind:
-    - id:{id}
+    - parcelId:{parcelId}
     - customerId:@user_id
   
 services:

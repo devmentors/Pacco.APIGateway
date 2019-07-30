@@ -21,7 +21,7 @@ routes:
   use: downstream
   downstream: customers-service/customers
   bind:
-    - id:@user_id
+    - customerId:@user_id
   auth: true
   payload: create_customer
   schema: create_customer.schema

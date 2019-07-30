@@ -11,6 +11,9 @@ routes:
 - upstream: /
   method: POST
   auth: true
+  resource_id:
+    property: deliveryId
+    generate: true
   use: message_broker
   config:
     exchange: deliveries
@@ -24,7 +27,7 @@ routes:
     exchange: deliveries
     routing_key: deliveries.fail_delivery
   bind:
-    - id:{deliveryId}
+    - deliveryId:{deliveryId}
 
 - upstream: /{deliveryId}/complete
   method: POST
@@ -34,7 +37,7 @@ routes:
     exchange: deliveries
     routing_key: deliveries.complete_delivery
   bind:
-    - id:{deliveryId}
+    - deliveryId:{deliveryId}
 
 - upstream: /{deliveryId}/registrations
   method: POST
@@ -44,7 +47,7 @@ routes:
     exchange: deliveries
     routing_key: deliveries.add_delivery_registration
   bind:
-    - id:{deliveryId}
+    - deliveryId:{deliveryId}
   
 services:
   deliveries-service:

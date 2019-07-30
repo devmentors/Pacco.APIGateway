@@ -2,10 +2,10 @@ name: Operations
 path: /operations
 
 routes:
-- upstream: /{id}
+- upstream: /{operationId}
   method: GET
   use: downstream
-  downstream: operations-service/operations/{id}
+  downstream: operations-service/operations/{operationId}
   auth: false
   
 services:

@@ -120,7 +120,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "id": "{{resourceId}}"
+  "resourceId": "{{resourceId}}"
 }
 
 ### Assign a vehicle to your order and set the desired delivery date

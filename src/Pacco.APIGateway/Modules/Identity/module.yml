@@ -2,10 +2,10 @@ name: Identity
 path: /identity
 
 routes:
-  - upstream: /users/{id}
+  - upstream: /users/{userId}
     method: GET
     use: downstream
-    downstream: identity-service/users/{id}
+    downstream: identity-service/users/{userId}
     auth: true
     claims:
       role: admin
@@ -21,6 +21,9 @@ routes:
     use: downstream
     downstream: identity-service/sign-up
     auth: false
+    resource_id:
+      property: userId
+      generate: true
 
   - upstream: /sign-in
     method: POST

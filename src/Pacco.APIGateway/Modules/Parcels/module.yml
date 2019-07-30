@@ -8,10 +8,10 @@ routes:
   downstream: parcels-service/parcels?customerId=@user_id
   auth: true
 
-- upstream: /{id}
+- upstream: /{parcelId}
   method: GET
   use: downstream
-  downstream: parcels-service/parcels/{id}
+  downstream: parcels-service/parcels/{parcelId}
   auth: true
 
 - upstream: /volume
@@ -25,13 +25,16 @@ routes:
   use: downstream
   downstream: parcels-service/parcels
   auth: true
+  resource_id:
+    property: parcelId
+    generate: true
   bind:
     - customerId:@user_id
 
-- upstream: /{id}
+- upstream: /{parcelId}
   method: DELETE
   use: downstream
-  downstream: parcels-service/parcels/{id}?customerId=@user_id
+  downstream: parcels-service/parcels/{parcelId}?customerId=@user_id
   auth: true
   
 services:

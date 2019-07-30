@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Security.Claims;
 using Microsoft.Extensions.DependencyInjection;
 using Ntrada;
 using Ntrada.Handlers.RabbitMq;
@@ -29,8 +31,14 @@ namespace Pacco.APIGateway.Infrastructure
 
             return new CorrelationContext
             {
-                Id = executionData.RequestId,
-                UserId = executionData.UserId,
+                CorrelationId = executionData.RequestId,
+                User = new CorrelationContext.UserContext
+                {
+                    Id = executionData.UserId,
+                    Claims = executionData.Claims,
+                    Role = executionData.Claims.FirstOrDefault(c => c.Key == ClaimTypes.Role).Value,
+                    IsAuthenticated = !string.IsNullOrWhiteSpace(executionData.UserId)
+                },
                 ResourceId = executionData.ResourceId,
                 TraceId = executionData.TraceId,
                 ConnectionId = executionData.Request.HttpContext.Connection.Id,

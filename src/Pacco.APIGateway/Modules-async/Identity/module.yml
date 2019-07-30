@@ -2,10 +2,10 @@ name: Identity
 path: /identity
 
 routes:
-  - upstream: /users/{id}
+  - upstream: /users/{userId}
     method: GET
     use: downstream
-    downstream: identity-service/users/{id}
+    downstream: identity-service/users/{userId}
     auth: true
     claims:
       role: admin
@@ -19,6 +19,9 @@ routes:
   - upstream: /sign-up
     method: POST
     auth: false
+    resource_id:
+      property: userId
+      generate: true
     use: message_broker
     config:
       exchange: identity

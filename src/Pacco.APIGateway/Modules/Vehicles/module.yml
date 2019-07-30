@@ -10,10 +10,10 @@ routes:
   on_success:
     data: response.data.items
 
-- upstream: /{id}
+- upstream: /{vehicleId}
   method: GET
   use: downstream
-  downstream: vehicles-service/vehicles/{id}
+  downstream: vehicles-service/vehicles/{vehicleId}
   auth: true
 
 - upstream: /
@@ -21,17 +21,20 @@ routes:
   use: downstream
   downstream: vehicles-service/vehicles
   auth: true
+  resource_id:
+    property: vehicleId
+    generate: true
 
-- upstream: /{id}
+- upstream: /{vehicleId}
   method: PUT
   use: downstream
-  downstream: vehicles-service/vehicles/{id}
+  downstream: vehicles-service/vehicles/{vehicleId}
   auth: true
 
-- upstream: /{id}
+- upstream: /{vehicleId}
   method: DELETE
   use: downstream
-  downstream: vehicles-service/vehicles/{id}
+  downstream: vehicles-service/vehicles/{vehicleId}
   auth: true
   
 services:
