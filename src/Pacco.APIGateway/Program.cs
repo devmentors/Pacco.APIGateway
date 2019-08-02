@@ -21,7 +21,7 @@ namespace Pacco.APIGateway
                     .AddSingleton<IContextBuilder, CorrelationContextBuilder>()
                     .AddSingleton<IBeforeHttpClientRequestHook, CorrelationContextHttpHook>()
                     .AddRabbitMq<CorrelationContext>()
-                    .AddNtrada("ntrada-async")
+                    .AddNtrada()
                     .AddConvey()
                     .AddMetrics())
                 .Configure(app => app

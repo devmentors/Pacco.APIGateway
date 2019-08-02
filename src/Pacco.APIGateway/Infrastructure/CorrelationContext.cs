@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Pacco.APIGateway.Infrastructure
 {
-    public class CorrelationContext
+    internal class CorrelationContext
     {
         public string CorrelationId { get; set; }
         public string SpanContext { get; set; }

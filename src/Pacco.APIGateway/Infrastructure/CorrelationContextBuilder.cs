@@ -8,7 +8,7 @@ using OpenTracing;
 
 namespace Pacco.APIGateway.Infrastructure
 {
-    public class CorrelationContextBuilder : IContextBuilder
+    internal sealed class CorrelationContextBuilder : IContextBuilder
     {
         private readonly NtradaConfiguration _configuration;
         private readonly IServiceProvider _serviceProvider;

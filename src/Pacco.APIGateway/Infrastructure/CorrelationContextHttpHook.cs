@@ -6,7 +6,7 @@ using Ntrada.Hooks;
 
 namespace Pacco.APIGateway.Infrastructure
 {
-    public class CorrelationContextHttpHook : IBeforeHttpClientRequestHook
+    internal sealed class CorrelationContextHttpHook : IBeforeHttpClientRequestHook
     {
         private readonly IContextBuilder _contextBuilder;
 
