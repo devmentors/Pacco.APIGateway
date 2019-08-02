@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Ntrada;
 using Ntrada.Handlers.RabbitMq;
+using Ntrada.Hooks;
 using Pacco.APIGateway.Infrastructure;
 
 namespace Pacco.APIGateway
@@ -18,8 +19,9 @@ namespace Pacco.APIGateway
                 .ConfigureServices(services => services
                     .AddOpenTracing()
                     .AddSingleton<IContextBuilder, CorrelationContextBuilder>()
+                    .AddSingleton<IBeforeHttpClientRequestHook, CorrelationContextHttpHook>()
                     .AddRabbitMq<CorrelationContext>()
-                    .AddNtrada()
+                    .AddNtrada("ntrada-async")
                     .AddConvey()
                     .AddMetrics())
                 .Configure(app => app

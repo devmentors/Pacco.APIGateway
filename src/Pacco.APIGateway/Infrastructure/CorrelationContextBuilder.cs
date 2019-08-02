@@ -29,6 +29,18 @@ namespace Pacco.APIGateway.Infrastructure
                     tracer.ActiveSpan is null ? string.Empty : tracer.ActiveSpan.Context.ToString();
             }
 
+            var name = string.Empty;
+            if (!(executionData.Route.Config is null) &&
+                executionData.Route.Config.TryGetValue("routing_key", out var routingKey))
+            {
+                name = routingKey ?? string.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                name = $"{executionData.Request.Method} {executionData.Request}";
+            }
+
             return new CorrelationContext
             {
                 CorrelationId = executionData.RequestId,
@@ -42,7 +54,7 @@ namespace Pacco.APIGateway.Infrastructure
                 ResourceId = executionData.ResourceId,
                 TraceId = executionData.TraceId,
                 ConnectionId = executionData.Request.HttpContext.Connection.Id,
-                Name = executionData.Route.Config["routing_key"],
+                Name = name,
                 CreatedAt = DateTime.UtcNow,
                 SpanContext = spanContext
             };
