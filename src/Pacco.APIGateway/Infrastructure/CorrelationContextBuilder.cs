@@ -48,7 +48,7 @@ namespace Pacco.APIGateway.Infrastructure
                 {
                     Id = executionData.UserId,
                     Claims = executionData.Claims,
-                    Role = executionData.Claims.FirstOrDefault(c => c.Key == ClaimTypes.Role).Value,
+                    Role = executionData.Claims.FirstOrDefault(c => c.Key == ClaimTypes.Role).Value?.ToLowerInvariant(),
                     IsAuthenticated = !string.IsNullOrWhiteSpace(executionData.UserId)
                 },
                 ResourceId = executionData.ResourceId,
