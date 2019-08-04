@@ -1,5 +1,5 @@
 #!/bin/bash
-DOCKER_TAG=''
+TAG=''
 
 case "$TRAVIS_BRANCH" in
   "master")
@@ -10,6 +10,8 @@ case "$TRAVIS_BRANCH" in
     ;;    
 esac
 
+IMAGE=$DOCKER_USERNAME/pacco.apigateway:$TAG
+
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-docker build -t $DOCKER_TAG $DOCKER_USERNAME/pacco.apigateway:$DOCKER_TAG .
-docker push $DOCKER_USERNAME/pacco.apigateway:$DOCKER_TAG
+docker build -t $IMAGE .
+docker push $IMAGE
