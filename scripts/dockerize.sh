@@ -3,10 +3,10 @@ TAG=''
 
 case "$TRAVIS_BRANCH" in
   "master")
-    DOCKER_TAG=latest
+    TAG=latest
     ;;
   "develop")
-    DOCKER_TAG=dev
+    TAG=dev
     ;;    
 esac
 
