@@ -1,5 +1,6 @@
-[Oo]bj/
-[Bb]in/
+**/[Oo]bj
+**/[Bb]in
+**/[Ll]ogs
 TestResults/
 .nuget/
 _ReSharper.*/
@@ -26,4 +27,3 @@ nuget.exe
 project.lock.json
 bower_components/
 node_modules/
-logs/
