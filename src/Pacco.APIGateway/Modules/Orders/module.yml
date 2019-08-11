@@ -28,7 +28,7 @@ routes:
 - upstream: /{orderId}
   method: DELETE
   use: downstream
-  downstream: orders-service/orders/{orderId}?customerId=@user_id
+  downstream: orders-service/orders/{orderId}
   auth: true
   
 - upstream: /{orderId}/parcels/{parcelId}
@@ -44,7 +44,7 @@ routes:
 - upstream: /{orderId}/parcels/{parcelId}
   method: DELETE
   use: downstream
-  downstream: orders-service/orders/{orderId}/parcels/{parcelId}?customerId=@user_id
+  downstream: orders-service/orders/{orderId}/parcels/{parcelId}
   auth: true
 
 - upstream: /{orderId}/vehicles/{vehicleId}

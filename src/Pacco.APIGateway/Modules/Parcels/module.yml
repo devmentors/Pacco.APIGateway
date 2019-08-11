@@ -34,7 +34,7 @@ routes:
 - upstream: /{parcelId}
   method: DELETE
   use: downstream
-  downstream: parcels-service/parcels/{parcelId}?customerId=@user_id
+  downstream: parcels-service/parcels/{parcelId}
   auth: true
   
 services:
