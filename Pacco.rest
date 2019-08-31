@@ -1,5 +1,5 @@
 @api = http://localhost:5000
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNjA5MzNiZmRhMzA0NDM0YjJiOGM0NmE0NjhhNDhjNyIsInVuaXF1ZV9uYW1lIjoiMTYwOTMzYmZkYTMwNDQzNGIyYjhjNDZhNDY4YTQ4YzciLCJqdGkiOiI4ZWQzMjA5My03YjhiLTQ4YWQtYTczOS02NDZjNjMzZTVmYjQiLCJpYXQiOiIxNTYyNDIzODI3NzYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsIm5iZiI6MTU2MjQyMzgyNywiZXhwIjoxNTYyNDI3NDI3LCJpc3MiOiJwYWNjbyJ9.OUO0WtBlwZHmvUZwTlwCWDO-k9dYa645yruaDoUjgMw
+@accessToken = xxx.xxx.xxx
 @customerId = 00000000-0000-0000-0000-000000000000
 @operationId = 00000000-0000-0000-0000-000000000000
 @parcelId = 00000000-0000-0000-0000-000000000000
@@ -10,6 +10,7 @@
 @dateTime = 2019-10-10
 @deliveryDate = 2019-10-10
 @orderPrice = 100
+@state = valid
 
 
 # ============== IDENTITY ==================== #
@@ -19,9 +20,9 @@ POST {{api}}/identity/sign-up
 Content-Type: application/json
 
 {
-  "email": "pacco-user1@mailinator.com",
+  "email": "admin-user1@mailinator.com",
   "password": "secret",
-  "role": "user"
+  "role": "admin"
 }
 
 ### POST sign-in
@@ -29,7 +30,7 @@ POST {{api}}/identity/sign-in
 Content-Type: application/json
 
 {
-  "email": "pacco-user1@mailinator.com",
+  "email": "admin-user1@mailinator.com",
   "password": "secret"
 }
 
@@ -40,17 +41,23 @@ Authorization: Bearer {{accessToken}}
 
 # ============== CUSTOMERS ==================== #
 
-### GET customers/me
-GET {{api}}/customers/me
-Authorization: Bearer {{accessToken}}
-
-
-### GET customers (admin)
+###
 GET {{api}}/customers
 Authorization: Bearer {{accessToken}}
 
+###
+GET {{api}}/customers/me
+Authorization: Bearer {{accessToken}}
 
-### POST customers
+###
+GET {{api}}/customers/{{customerId}}
+Authorization: Bearer {{accessToken}}
+
+###
+GET {{api}}/customers/{{customerId}}/state
+Authorization: Bearer {{accessToken}}
+
+###
 POST {{api}}/customers
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
@@ -58,6 +65,16 @@ Content-Type: application/json
 {
   "fullName": "John Doe",
   "address": "New York"
+}
+
+###
+PUT {{api}}/customers/{{customerId}}/state/{{state}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "state": "{{state}}"
 }
 
 # ============== AVAILABILITY ==================== #

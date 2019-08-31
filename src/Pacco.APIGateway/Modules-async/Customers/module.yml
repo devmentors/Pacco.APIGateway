@@ -15,6 +15,22 @@ routes:
   use: downstream
   downstream: customers-service/customers/@user_id
   auth: true
+
+- upstream: /{customerId}
+  method: GET
+  use: downstream
+  downstream: customers-service/customers/{customerId}
+  auth: true
+  claims:
+    role: admin
+
+- upstream: /{customerId}/state
+  method: GET
+  use: downstream
+  downstream: customers-service/customers/{customerId}/state
+  auth: true
+  claims:
+    role: admin
   
 - upstream: /
   method: POST
@@ -27,6 +43,19 @@ routes:
     - customerId:@user_id
   payload: complete_customer_registration
   schema: complete_customer_registration.schema
+
+- upstream: /{customerId}/state/{state}
+  method: PUT
+  auth: true
+  use: message_broker
+  config:
+    exchange: customers
+    routing_key: customers.change_customer_state
+  bind:
+    - customerId:{customerId}
+    - state:{state}
+  claims:
+    role: admin
   
 services:
   customers-service:
