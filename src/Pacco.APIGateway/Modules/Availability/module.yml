@@ -17,7 +17,7 @@ routes:
 - upstream: /resources/{resourceId}/reservations/{dateTime}
   method: POST
   use: downstream
-  downstream: availability-service/resources/{resourceId}/reservations
+  downstream: availability-service/resources/{resourceId}/reservations/{dateTime}
   auth: true
   bind:
     - resourceId:{resourceId}
