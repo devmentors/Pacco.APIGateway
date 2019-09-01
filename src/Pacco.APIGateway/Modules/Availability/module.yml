@@ -14,13 +14,15 @@ routes:
   downstream: availability-service/resources
   auth: true
   
-- upstream: /resources/{resourceId}/reservations
+- upstream: /resources/{resourceId}/reservations/{dateTime}
   method: POST
   use: downstream
   downstream: availability-service/resources/{resourceId}/reservations
   auth: true
   bind:
     - resourceId:{resourceId}
+    - customerId:@user_id
+    - dateTime:{dateTime}
   
 - upstream: /resources/{resourceId}/reservations/{dateTime}
   method: DELETE

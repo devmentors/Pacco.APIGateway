@@ -135,12 +135,11 @@ Content-Type: application/json
 }
 
 ### Make a reservation for the given date to deliver the package
-POST {{api}}/availability/resources/{{resourceId}}/reservations
+POST {{api}}/availability/resources/{{resourceId}}/reservations/{{deliveryDate}}
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "dateTime": "{{deliveryDate}}",
   "priority": 0
 }
 

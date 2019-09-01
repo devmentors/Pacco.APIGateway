@@ -89,15 +89,17 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "id": "{{resourceId}}"
+  "resourceId": "{{resourceId}}"
 }
 
 ###
-POST {{api}}/availability/resources/{{resourceId}}/reservations
+POST {{api}}/availability/resources/{{resourceId}}/reservations/{{dateTime}}
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
+  "resourceId": "{{resourceId}}",
+  "customerId": "{{customerId}}",
   "dateTime": "{{dateTime}}",
   "priority": 0
 }

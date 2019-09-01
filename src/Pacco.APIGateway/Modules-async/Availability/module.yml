@@ -16,7 +16,7 @@ routes:
     exchange: availability
     routing_key: availability.add_resource
 
-- upstream: /resources/{resourceId}/reservations
+- upstream: /resources/{resourceId}/reservations/{dateTime}
   method: POST
   auth: true
   use: message_broker
@@ -25,6 +25,8 @@ routes:
     routing_key: availability.reserve_resource
   bind:
     - resourceId:{resourceId}
+    - customerId:@user_id
+    - dateTime:{dateTime}
 
 - upstream: /resources/{resourceId}/reservations/{dateTime}
   method: DELETE
