@@ -60,4 +60,4 @@ routes:
 services:
   customers-service:
     local_url: localhost:5002
-    url: load_balancer/customers-service
+    url: customers-service

@@ -11,4 +11,4 @@ routes:
 services:
   operations-service:
     local_url: localhost:5005
-    url: load_balancer/operations-service
+    url: operations-service

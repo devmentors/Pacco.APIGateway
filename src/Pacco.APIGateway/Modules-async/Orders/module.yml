@@ -77,4 +77,4 @@ routes:
 services:
   orders-service:
     local_url: localhost:5006
-    url: load_balancer/orders-service
+    url: orders-service

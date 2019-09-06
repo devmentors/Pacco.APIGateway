@@ -10,7 +10,7 @@ generate_request_id: true
 generate_trace_id: true
 use_local_url: false
 load_balancer:
-  enabled: true
+  enabled: false
   url: fabio:9999
 
 cors:

@@ -11,4 +11,4 @@ routes:
 services:
   pricing-service:
     local_url: localhost:5008
-    url: load_balancer/pricing-service
+    url: pricing-service

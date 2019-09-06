@@ -40,4 +40,4 @@ routes:
 services:
   parcels-service:
     local_url: localhost:5007
-    url: load_balancer/parcels-service
+    url: parcels-service

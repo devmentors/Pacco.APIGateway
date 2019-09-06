@@ -44,4 +44,4 @@ routes:
 services:
   deliveries-service:
     local_url: localhost:5003
-    url: load_balancer/deliveries-service
+    url: deliveries-service

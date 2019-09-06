@@ -38,4 +38,4 @@ routes:
 services:
   identity-service:
     local_url: localhost:5004
-    url: load_balancer/identity-service
+    url: identity-service

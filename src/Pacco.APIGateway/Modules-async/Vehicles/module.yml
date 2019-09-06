@@ -50,4 +50,4 @@ routes:
 services:
   vehicles-service:
     local_url: localhost:5009
-    url: load_balancer/vehicles-service
+    url: vehicles-service
