@@ -20,7 +20,7 @@ namespace Pacco.APIGateway
             => await WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(builder =>
                 {
-                    var configPath = args?.FirstOrDefault() ?? "ntrada-async.yml";
+                    var configPath = args?.FirstOrDefault() ?? "ntrada.yml";
                     builder.AddYamlFile(configPath, false);
                 })
                 .ConfigureServices(services => services
