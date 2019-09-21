@@ -9,19 +9,17 @@
   <ItemGroup>
     <PackageReference Include="Convey.Logging" Version="0.0.*" />
     <PackageReference Include="Convey.Metrics.AppMetrics" Version="0.0.*" />
-    <PackageReference Include="Ntrada_" Version="1.2.4" />
-    <PackageReference Include="Ntrada.Handlers.RabbitMq_" Version="1.2.0" />
-    <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.6.0" />
+    <PackageReference Include="NetEscapades.Configuration.Yaml" Version="1.6.0" />
+    <PackageReference Include="Ntrada" Version="0.0.4" />
+    <PackageReference Include="Ntrada.Extensions.Cors" Version="0.0.2" />
+    <PackageReference Include="Ntrada.Extensions.CustomErrors" Version="0.0.2" />
+    <PackageReference Include="Ntrada.Extensions.Jwt" Version="0.0.2" />
+    <PackageReference Include="Ntrada.Extensions.RabbitMq" Version="0.0.3" />
+    <PackageReference Include="Ntrada.Extensions.Tracing" Version="0.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ntrada.yml" />
-    <Content Include="ntrada-async.docker.yml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ntrada.docker.yml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="ntrada.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -29,12 +27,6 @@
     <Content Include="ntrada-async.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Modules\**">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Modules-async\**">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>    
   </ItemGroup>
 
 </Project>

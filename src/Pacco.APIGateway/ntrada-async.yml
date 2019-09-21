@@ -1,51 +1,481 @@
-use_error_handler: true
-use_jaeger: true
-use_forwarded_headers: true
-pass_query_string: true
-modules_path: Modules-async
-payloads_folder: Payloads
-forward_request_headers: true
-forward_response_headers: true
-generate_request_id: true
-generate_trace_id: true
-use_local_url: true
-load_balancer:
-  enabled: false
-  url: localhost:9999
-
-cors:
+auth:
   enabled: true
-  headers:
-  - Request-ID
-  - Resource-ID
-  - Trace-ID
-  - Total-Count
+  global: false
+  claims:
+    role: http://schemas.microsoft.com/ws/2008/06/identity/claims/role
 
 http:
   retries: 2
   interval: 2.0
   exponential: true
 
-auth:
-  type: jwt
-  global: true
+useForwardedHeaders: true
+passQueryString: true
+forwardRequestHeaders: true
+forwardResponseHeaders: true
+generateRequestId: true
+generateTraceId: true
+useLocalUrl: true
+loadBalancer:
+  enabled: false
+  url: localhost:9999
+
+extensions:
+  customErrors:
+    includeExceptionMessage: true
+
+  cors:
+    allowCredentials: true
+    allowedOrigins:
+      - '*'
+    allowedMethods:
+      - post
+      - delete
+      - delete
+    allowedHeaders:
+      - '*'
+    exposedHeaders:
+      - Request-ID
+      - Resource-ID
+      - Trace-ID
+      - Total-Count
+
   jwt:
-    key: eiquief5phee9pazo0Faegaez9gohThailiur5woy2befiech1oarai4aiLi6ahVecah3ie9Aiz6Peij
+    key: ku4oigi9eigae6ge9iupeeHu1osh3aCaequ2yooNg2eireizaeR8thai4ohk9ooMohwaefoogeijivae8uuth7hieV7fiejai6th
     issuer: pacco
     issuers:
-    validate_issuer: true
+    validateIssuer: true
     audience:
     audiences:
-    validate_audience: false
-    validate_lifetime: true
-  claims:
-    role: http://schemas.microsoft.com/ws/2008/06/identity/claims/role
+    validateAudience: false
+    validateLifetime: true
+
+  rabbitmq:
+    enabled: true
+    hostname: localhost
+    port: 5672
+    virtualHost: /
+    username: guest
+    password: guest
+    requestedConnectionTimeout: 3000
+    socketReadTimeout: 3000
+    socketWriteTimeout: 3000
+    requestedHeartbeat: 60
+    exchange:
+      declareExchange: true
+      durable: true
+      autoDelete: false
+      type: topic
+    context:
+      enabled: true
+      custom: true
+
+  tracing:
+    serviceName: ntrada
+    udpHost: localhost
+    udpPort: 6831
+    maxPacketSize: 0
+    sampler: const
+    useEmptyTracer: false
 
 modules:
-- name: home
-  routes:
-  - upstream: /
-    method: GET
-    use: return_value
-    return_value: Welcome to Pacco API [async]!
-    auth: false
+  home:
+    routes:
+      - upstream: /
+        method: GET
+        use: return_value
+        returnValue: Welcome to Pacco API [async]!
+
+
+  availability:
+    path: availability
+    routes:
+      - upstream: /resources/{resourceId}
+        method: GET
+        use: downstream
+        downstream: availability-service/resources/{resourceId}
+        auth: true
+    
+      - upstream: /resources
+        method: POST
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: availability
+          routing_key: availability.add_resource
+    
+      - upstream: /resources/{resourceId}/reservations/{dateTime}
+        method: POST
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: availability
+          routing_key: availability.reserve_resource
+        bind:
+          - resourceId:{resourceId}
+          - customerId:@user_id
+          - dateTime:{dateTime}
+    
+      - upstream: /resources/{resourceId}/reservations/{dateTime}
+        method: DELETE
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: availability
+          routing_key: availability.release_resource
+        bind:
+          - resourceId:{resourceId}
+          - dateTime:{dateTime}
+    
+      - upstream: /resources/{resourceId}
+        method: DELETE
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: availability
+          routing_key: availability.delete_resource
+        bind:
+          - resourceId:{resourceId}
+
+    services:
+      availability-service:
+        localUrl: localhost:5001
+        url: availability-service
+
+
+  customers:
+    path: customers
+    routes:
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: customers-service/customers
+        auth: true
+        claims:
+          role: admin
+    
+      - upstream: /me
+        method: GET
+        use: downstream
+        downstream: customers-service/customers/@user_id
+        auth: true
+    
+      - upstream: /{customerId}
+        method: GET
+        use: downstream
+        downstream: customers-service/customers/{customerId}
+        auth: true
+        claims:
+          role: admin
+    
+      - upstream: /{customerId}/state
+        method: GET
+        use: downstream
+        downstream: customers-service/customers/{customerId}/state
+        auth: true
+        claims:
+          role: admin
+    
+      - upstream: /
+        method: POST
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: customers
+          routing_key: customers.complete_customer_registration
+        bind:
+          - customerId:@user_id
+        payload: complete_customer_registration
+        schema: complete_customer_registration.schema
+    
+      - upstream: /{customerId}/state/{state}
+        method: PUT
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: customers
+          routing_key: customers.change_customer_state
+        bind:
+          - customerId:{customerId}
+          - state:{state}
+        claims:
+          role: admin
+
+    services:
+      customers-service:
+        localUrl: localhost:5002
+        url: customers-service
+
+
+  deliveries:
+    path: deliveries
+    routes:
+      - upstream: /{orderId}
+        method: GET
+        use: downstream
+        downstream: deliveries-service/deliveries/{orderId}
+        auth: true
+    
+      - upstream: /
+        method: POST
+        auth: true
+        resourceId:
+          property: deliveryId
+          generate: true
+        use: rabbitmq
+        config:
+          exchange: deliveries
+          routing_key: deliveries.start_delivery
+    
+      - upstream: /{deliveryId}/fail
+        method: POST
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: deliveries
+          routing_key: deliveries.fail_delivery
+        bind:
+          - deliveryId:{deliveryId}
+    
+      - upstream: /{deliveryId}/complete
+        method: POST
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: deliveries
+          routing_key: deliveries.complete_delivery
+        bind:
+          - deliveryId:{deliveryId}
+    
+      - upstream: /{deliveryId}/registrations
+        method: POST
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: deliveries
+          routing_key: deliveries.add_delivery_registration
+        bind:
+          - deliveryId:{deliveryId}
+
+    services:
+      deliveries-service:
+        localUrl: localhost:5003
+        url: deliveries-service
+
+
+  identity:
+    path: identity
+    routes:
+      - upstream: /users/{userId}
+        method: GET
+        use: downstream
+        downstream: identity-service/users/{userId}
+        auth: true
+        claims:
+          role: admin
+    
+      - upstream: /me
+        method: GET
+        use: downstream
+        downstream: identity-service/me
+        auth: true
+    
+      - upstream: /sign-up
+        method: POST
+        auth: false
+        resourceId:
+          property: userId
+          generate: true
+        use: rabbitmq
+        config:
+          exchange: identity
+          routing_key: identity.sign_up
+    
+      - upstream: /sign-in
+        method: POST
+        auth: false
+        use: downstream
+        downstream: identity-service/sign-in
+        response_headers:
+          content-type: application/json
+
+    services:
+      identity-service:
+        localUrl: localhost:5004
+        url: identity-service
+
+  operations:
+    path: operations
+    routes:
+      - upstream: /{operationId}
+        method: GET
+        use: downstream
+        downstream: operations-service/operations/{operationId}
+        auth: false
+
+    services:
+      operations-service:
+        localUrl: localhost:5005
+        url: operations-service
+
+
+  orders:
+    path: orders
+    routes:
+      - upstream: /users/{userId}
+        method: GET
+        use: downstream
+        downstream: identity-service/users/{userId}
+        auth: true
+        claims:
+          role: admin
+    
+      - upstream: /me
+        method: GET
+        use: downstream
+        downstream: identity-service/me
+        auth: true
+    
+      - upstream: /sign-up
+        method: POST
+        auth: false
+        resourceId:
+          property: userId
+          generate: true
+        use: rabbitmq
+        config:
+          exchange: identity
+          routing_key: identity.sign_up
+    
+      - upstream: /sign-in
+        method: POST
+        auth: false
+        use: downstream
+        downstream: identity-service/sign-in
+        response_headers:
+          content-type: application/json
+
+    services:
+      orders-service:
+        localUrl: localhost:5006
+        url: orders-service
+
+
+  parcels:
+    path: parcels
+    routes:
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: parcels-service/parcels?customerId=@user_id
+        auth: true
+    
+      - upstream: /{parcelId}
+        method: GET
+        use: downstream
+        downstream: parcels-service/parcels/{parcelId}
+        auth: true
+    
+      - upstream: /volume
+        method: GET
+        use: downstream
+        downstream: parcels-service/parcels/volume
+        auth: true
+    
+      - upstream: /
+        method: POST
+        auth: true
+        resourceId:
+          property: parcelId
+          generate: true
+        use: rabbitmq
+        config:
+          exchange: parcels
+          routing_key: parcels.add_parcel
+        bind:
+          - customerId:@user_id
+    
+      - upstream: /{parcelId}
+        method: DELETE
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: parcels
+          routing_key: parcels.delete_parcel
+        bind:
+          - parcelId:{parcelId}
+          - customerId:@user_id
+
+    services:
+      parcels-service:
+        localUrl: localhost:5007
+        url: parcels-service
+
+
+  pricing:
+    path: pricing
+    routes:
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: pricing-service/pricing?customerId=@user_id
+        auth: true
+
+    services:
+      pricing-service:
+        localUrl: localhost:5008
+        url: pricing-service
+
+
+  vehicles:
+    path: vehicles
+    routes:
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: vehicles-service/vehicles
+        auth: true
+        on_success:
+          data: response.data.items
+    
+      - upstream: /{vehicleId}
+        method: GET
+        use: downstream
+        downstream: vehicles-service/vehicles/{vehicleId}
+        auth: true
+    
+      - upstream: /
+        method: POST
+        auth: true
+        resourceId:
+          property: vehicleId
+          generate: true
+        use: rabbitmq
+        config:
+          exchange: vehicles
+          routing_key: vehicles.add_vehicle
+    
+      - upstream: /{vehicleId}
+        method: PUT
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: vehicles
+          routing_key: vehicles.update_vehicle
+        bind:
+          - vehicleId:{vehicleId}
+    
+      - upstream: /{vehicleId}
+        method: DELETE
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: vehicles
+          routing_key: vehicles.delete_vehicle
+        bind:
+          - vehicleId:{vehicleId}
+
+    services:
+      vehicles-service:
+        localUrl: localhost:5009
+        url: vehicles-service

@@ -1,7 +1,7 @@
 using System.Net.Http;
 using Newtonsoft.Json;
 using Ntrada;
-using Ntrada.Handlers.RabbitMq;
+using Ntrada.Extensions.RabbitMq;
 using Ntrada.Hooks;
 
 namespace Pacco.APIGateway.Infrastructure

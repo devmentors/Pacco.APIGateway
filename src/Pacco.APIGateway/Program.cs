@@ -1,12 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Convey;
 using Convey.Logging;
 using Convey.Metrics.AppMetrics;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ntrada;
-using Ntrada.Handlers.RabbitMq;
+using Ntrada.Extensions.RabbitMq;
 using Ntrada.Hooks;
 using Pacco.APIGateway.Infrastructure;
 
@@ -16,17 +18,19 @@ namespace Pacco.APIGateway
     {
         public static async Task Main(string[] args)
             => await WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(builder =>
+                {
+                    var configPath = args?.FirstOrDefault() ?? "ntrada-async.yml";
+                    builder.AddYamlFile(configPath, false);
+                })
                 .ConfigureServices(services => services
                     .AddOpenTracing()
                     .AddSingleton<IContextBuilder, CorrelationContextBuilder>()
                     .AddSingleton<IBeforeHttpClientRequestHook, CorrelationContextHttpHook>()
-                    .AddRabbitMq<CorrelationContext>()
                     .AddNtrada()
                     .AddConvey()
                     .AddMetrics())
-                .Configure(app => app
-                    .UseRabbitMq()
-                    .UseNtrada())
+                .Configure(app => app.UseNtrada())
                 .UseLogging()
                 .Build()
                 .RunAsync();
