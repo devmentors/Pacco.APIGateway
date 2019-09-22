@@ -41,7 +41,7 @@ extensions:
       - Total-Count
 
   jwt:
-    key: ku4oigi9eigae6ge9iupeeHu1osh3aCaequ2yooNg2eireizaeR8thai4ohk9ooMohwaefoogeijivae8uuth7hieV7fiejai6th
+    key: eiquief5phee9pazo0Faegaez9gohThailiur5woy2befiech1oarai4aiLi6ahVecah3ie9Aiz6Peij
     issuer: pacco
     issuers:
     validateIssuer: true
