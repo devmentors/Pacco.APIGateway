@@ -68,10 +68,11 @@ extensions:
       type: topic
     context:
       enabled: true
-      custom: true
+      header: message_context
+      includeCorrelationId: true
 
   tracing:
-    serviceName: ntrada
+    serviceName: api-gateway
     udpHost: localhost
     udpPort: 6831
     maxPacketSize: 0
@@ -296,7 +297,7 @@ modules:
         auth: false
         use: downstream
         downstream: identity-service/sign-in
-        response_headers:
+        responseHeaders:
           content-type: application/json
 
     services:
@@ -322,38 +323,77 @@ modules:
   orders:
     path: orders
     routes:
-      - upstream: /users/{userId}
+      - upstream: /
         method: GET
         use: downstream
-        downstream: identity-service/users/{userId}
+        downstream: orders-service/orders?customerId=@user_id
         auth: true
-        claims:
-          role: admin
     
-      - upstream: /me
+      - upstream: /{orderId}
         method: GET
         use: downstream
-        downstream: identity-service/me
+        downstream: orders-service/orders/{orderId}
         auth: true
     
-      - upstream: /sign-up
+      - upstream: /
         method: POST
-        auth: false
-        resourceId:
-          property: userId
+        auth: true
+        resource_id:
+          property: orderId
           generate: true
         use: rabbitmq
         config:
-          exchange: identity
-          routing_key: identity.sign_up
+          exchange: orders
+          routing_key: orders.create_order
+        bind:
+          - customerId:@user_id
     
-      - upstream: /sign-in
+      - upstream: /{orderId}
+        method: DELETE
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: orders
+          routing_key: orders.delete_order
+        bind:
+          - orderId:{orderId}
+          - customerId:@user_id
+    
+      - upstream: /{orderId}/parcels/{parcelId}
         method: POST
-        auth: false
-        use: downstream
-        downstream: identity-service/sign-in
-        response_headers:
-          content-type: application/json
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: orders
+          routing_key: orders.add_parcel_to_order
+        bind:
+          - orderId:{orderId}
+          - parcelId:{parcelId}
+          - customerId:@user_id
+    
+      - upstream: /{orderId}/parcels/{parcelId}
+        method: DELETE
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: orders
+          routing_key: orders.delete_parcel_from_order
+        bind:
+          - orderId:{orderId}
+          - parcelId:{parcelId}
+          - customerId:@user_id
+    
+      - upstream: /{orderId}/vehicles/{vehicleId}
+        method: POST
+        auth: true
+        use: rabbitmq
+        config:
+          exchange: orders
+          routing_key: orders.assign_vehicle_to_order
+        bind:
+          - orderId:{orderId}
+          - vehicleId:{vehicleId}
+          - customerId:@user_id
 
     services:
       orders-service:

@@ -23,11 +23,10 @@ namespace Pacco.APIGateway
                     var configPath = args?.FirstOrDefault() ?? "ntrada.yml";
                     builder.AddYamlFile(configPath, false);
                 })
-                .ConfigureServices(services => services
+                .ConfigureServices(services => services.AddNtrada()
                     .AddOpenTracing()
                     .AddSingleton<IContextBuilder, CorrelationContextBuilder>()
                     .AddSingleton<IBeforeHttpClientRequestHook, CorrelationContextHttpHook>()
-                    .AddNtrada()
                     .AddConvey()
                     .AddMetrics())
                 .Configure(app => app.UseNtrada())

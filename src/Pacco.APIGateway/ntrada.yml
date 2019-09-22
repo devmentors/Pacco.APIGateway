@@ -50,6 +50,14 @@ extensions:
     validateAudience: false
     validateLifetime: true
 
+  tracing:
+    serviceName: api-gateway
+    udpHost: localhost
+    udpPort: 6831
+    maxPacketSize: 0
+    sampler: const
+    useEmptyTracer: false
+
 modules:
   home:
     routes:
@@ -246,7 +254,7 @@ modules:
         use: downstream
         downstream: identity-service/sign-in
         auth: false
-        response_headers:
+        responseHeaders:
           content-type: application/json
     
     services:
