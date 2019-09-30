@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Convey;
 using Convey.Logging;
@@ -20,7 +21,8 @@ namespace Pacco.APIGateway
             => await WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(builder =>
                 {
-                    var configPath = args?.FirstOrDefault() ?? "ntrada.yml";
+                    var ntradaConfig = Environment.GetEnvironmentVariable("NTRADA_CONFIG");
+                    var configPath = args?.FirstOrDefault() ?? ntradaConfig ?? "ntrada.yml";
                     builder.AddYamlFile(configPath, false);
                 })
                 .ConfigureServices(services => services.AddNtrada()

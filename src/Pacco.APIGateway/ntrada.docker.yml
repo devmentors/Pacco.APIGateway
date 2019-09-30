@@ -112,7 +112,7 @@ modules:
     services:
       availability-service:
         localUrl: localhost:5001
-        url: availability-service
+        url: availability-service:5000
       
 
   customers:
@@ -172,7 +172,7 @@ modules:
     services:
       customers-service:
         localUrl: localhost:5002
-        url: customers-service
+        url: customers-service:5000
       
       
   deliveries:
@@ -220,7 +220,7 @@ modules:
     services:
       deliveries-service:
         localUrl: localhost:5003
-        url: deliveries-service
+        url: deliveries-service:5000
 
 
   identity:
@@ -260,7 +260,7 @@ modules:
     services:
       identity-service:
         localUrl: localhost:5004
-        url: identity-service
+        url: identity-service:5000
       
       
   operations:
@@ -275,7 +275,7 @@ modules:
     services:
       operations-service:
         localUrl: localhost:5005
-        url: operations-service
+        url: operations-service:5000
 
 
   orders:
@@ -339,7 +339,7 @@ modules:
     services:
       orders-service:
         localUrl: localhost:5006
-        url: orders-service
+        url: orders-service:5000
 
 
   parcels:
@@ -383,7 +383,7 @@ modules:
     services:
       parcels-service:
         localUrl: localhost:5007
-        url: parcels-service
+        url: parcels-service:5000
 
 
   pricing:
@@ -398,7 +398,7 @@ modules:
     services:
       pricing-service:
         localUrl: localhost:5008
-        url: pricing-service
+        url: pricing-service:5000
       
       
   vehicles:
@@ -442,4 +442,4 @@ modules:
     services:
       vehicles-service:
         localUrl: localhost:5009
-        url: vehicles-service
+        url: vehicles-service:5000
