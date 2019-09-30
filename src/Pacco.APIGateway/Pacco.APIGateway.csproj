@@ -20,6 +20,12 @@
 
   <ItemGroup>
     <None Remove="ntrada.yml" />
+    <Content Include="ntrada-async.docker.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ntrada.docker.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ntrada.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
