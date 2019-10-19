@@ -32,7 +32,7 @@ namespace Pacco.APIGateway.Infrastructure
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = $"{executionData.Request.Method} {executionData.Request}";
+                name = $"{executionData.Context.Request.Method} {executionData.Context.Request}";
             }
 
             return new CorrelationContext
@@ -47,7 +47,7 @@ namespace Pacco.APIGateway.Infrastructure
                 },
                 ResourceId = executionData.ResourceId,
                 TraceId = executionData.TraceId,
-                ConnectionId = executionData.Request.HttpContext.Connection.Id,
+                ConnectionId = executionData.Context.Connection.Id,
                 Name = name,
                 CreatedAt = DateTime.UtcNow,
                 SpanContext = spanContext
