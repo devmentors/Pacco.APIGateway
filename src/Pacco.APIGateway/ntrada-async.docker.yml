@@ -52,7 +52,9 @@ extensions:
 
   rabbitmq:
     enabled: true
-    hostname: rabbitmq
+    connectionName: api-gateway
+    hostnames:
+      - rabbitmq
     port: 5672
     virtualHost: /
     username: guest
@@ -69,7 +71,8 @@ extensions:
     context:
       enabled: true
       header: message_context
-      includeCorrelationId: true
+    logger:
+      enabled: true
 
   tracing:
     serviceName: api-gateway
