@@ -107,7 +107,7 @@ modules:
         use: rabbitmq
         config:
           exchange: availability
-          routing_key: availability.add_resource
+          routing_key: add_resource
     
       - upstream: /resources/{resourceId}/reservations/{dateTime}
         method: POST
@@ -115,7 +115,7 @@ modules:
         use: rabbitmq
         config:
           exchange: availability
-          routing_key: availability.reserve_resource
+          routing_key: reserve_resource
         bind:
           - resourceId:{resourceId}
           - customerId:@user_id
@@ -127,7 +127,7 @@ modules:
         use: rabbitmq
         config:
           exchange: availability
-          routing_key: availability.release_resource
+          routing_key: release_resource
         bind:
           - resourceId:{resourceId}
           - dateTime:{dateTime}
@@ -138,7 +138,7 @@ modules:
         use: rabbitmq
         config:
           exchange: availability
-          routing_key: availability.delete_resource
+          routing_key: delete_resource
         bind:
           - resourceId:{resourceId}
 
@@ -187,7 +187,7 @@ modules:
         use: rabbitmq
         config:
           exchange: customers
-          routing_key: customers.complete_customer_registration
+          routing_key: complete_customer_registration
         bind:
           - customerId:@user_id
         payload: complete_customer_registration
@@ -199,7 +199,7 @@ modules:
         use: rabbitmq
         config:
           exchange: customers
-          routing_key: customers.change_customer_state
+          routing_key: change_customer_state
         bind:
           - customerId:{customerId}
           - state:{state}
@@ -230,7 +230,7 @@ modules:
         use: rabbitmq
         config:
           exchange: deliveries
-          routing_key: deliveries.start_delivery
+          routing_key: start_delivery
     
       - upstream: /{deliveryId}/fail
         method: POST
@@ -238,7 +238,7 @@ modules:
         use: rabbitmq
         config:
           exchange: deliveries
-          routing_key: deliveries.fail_delivery
+          routing_key: fail_delivery
         bind:
           - deliveryId:{deliveryId}
     
@@ -248,7 +248,7 @@ modules:
         use: rabbitmq
         config:
           exchange: deliveries
-          routing_key: deliveries.complete_delivery
+          routing_key: complete_delivery
         bind:
           - deliveryId:{deliveryId}
     
@@ -258,7 +258,7 @@ modules:
         use: rabbitmq
         config:
           exchange: deliveries
-          routing_key: deliveries.add_delivery_registration
+          routing_key: add_delivery_registration
         bind:
           - deliveryId:{deliveryId}
 
@@ -294,7 +294,7 @@ modules:
         use: rabbitmq
         config:
           exchange: identity
-          routing_key: identity.sign_up
+          routing_key: sign_up
     
       - upstream: /sign-in
         method: POST
@@ -348,7 +348,7 @@ modules:
         use: rabbitmq
         config:
           exchange: orders
-          routing_key: orders.create_order
+          routing_key: create_order
         bind:
           - customerId:@user_id
     
@@ -358,7 +358,7 @@ modules:
         use: rabbitmq
         config:
           exchange: orders
-          routing_key: orders.delete_order
+          routing_key: delete_order
         bind:
           - orderId:{orderId}
           - customerId:@user_id
@@ -369,7 +369,7 @@ modules:
         use: rabbitmq
         config:
           exchange: orders
-          routing_key: orders.add_parcel_to_order
+          routing_key: add_parcel_to_order
         bind:
           - orderId:{orderId}
           - parcelId:{parcelId}
@@ -381,7 +381,7 @@ modules:
         use: rabbitmq
         config:
           exchange: orders
-          routing_key: orders.delete_parcel_from_order
+          routing_key: delete_parcel_from_order
         bind:
           - orderId:{orderId}
           - parcelId:{parcelId}
@@ -393,7 +393,7 @@ modules:
         use: rabbitmq
         config:
           exchange: orders
-          routing_key: orders.assign_vehicle_to_order
+          routing_key: assign_vehicle_to_order
         bind:
           - orderId:{orderId}
           - vehicleId:{vehicleId}
@@ -435,7 +435,7 @@ modules:
         use: rabbitmq
         config:
           exchange: parcels
-          routing_key: parcels.add_parcel
+          routing_key: add_parcel
         bind:
           - customerId:@user_id
     
@@ -445,7 +445,7 @@ modules:
         use: rabbitmq
         config:
           exchange: parcels
-          routing_key: parcels.delete_parcel
+          routing_key: delete_parcel
         bind:
           - parcelId:{parcelId}
           - customerId:@user_id
@@ -497,7 +497,7 @@ modules:
         use: rabbitmq
         config:
           exchange: vehicles
-          routing_key: vehicles.add_vehicle
+          routing_key: add_vehicle
     
       - upstream: /{vehicleId}
         method: PUT
@@ -505,7 +505,7 @@ modules:
         use: rabbitmq
         config:
           exchange: vehicles
-          routing_key: vehicles.update_vehicle
+          routing_key: update_vehicle
         bind:
           - vehicleId:{vehicleId}
     
@@ -515,7 +515,7 @@ modules:
         use: rabbitmq
         config:
           exchange: vehicles
-          routing_key: vehicles.delete_vehicle
+          routing_key: delete_vehicle
         bind:
           - vehicleId:{vehicleId}
 
