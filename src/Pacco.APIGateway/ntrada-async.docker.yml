@@ -479,7 +479,7 @@ modules:
         use: downstream
         downstream: vehicles-service/vehicles
         auth: true
-        on_success:
+        onSuccess:
           data: response.data.items
     
       - upstream: /{vehicleId}
