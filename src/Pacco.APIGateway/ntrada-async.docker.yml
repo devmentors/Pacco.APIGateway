@@ -215,10 +215,10 @@ modules:
   deliveries:
     path: deliveries
     routes:
-      - upstream: /{orderId}
+      - upstream: /{deliveryId}
         method: GET
         use: downstream
-        downstream: deliveries-service/deliveries/{orderId}
+        downstream: deliveries-service/deliveries/{deliveryId}
         auth: true
     
       - upstream: /

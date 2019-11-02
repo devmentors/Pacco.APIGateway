@@ -184,7 +184,7 @@ Content-Type: application/json
 }
 
 ### Check the delivery details
-GET {{api}}/deliveries/{{orderId}}
+GET {{api}}/deliveries/{{deliveryId}}
 Authorization: Bearer {{accessToken}}
 
 ### Get your order details which should now be marked as completed
