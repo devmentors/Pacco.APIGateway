@@ -32,7 +32,7 @@ namespace Pacco.APIGateway.Infrastructure
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = $"{executionData.Context.Request.Method} {executionData.Context.Request}";
+                name = $"{executionData.Context.Request.Method} {executionData.Context.Request.Path}";
             }
 
             return new CorrelationContext
