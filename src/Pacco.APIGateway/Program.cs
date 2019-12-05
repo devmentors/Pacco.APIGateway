@@ -34,7 +34,7 @@ namespace Pacco.APIGateway
                             .AddOpenTracing()
                             .AddSingleton<IContextBuilder, CorrelationContextBuilder>()
                             .AddSingleton<ISpanContextBuilder, SpanContextBuilder>()
-                            .AddSingleton<IBeforeHttpClientRequestHook, CorrelationContextHttpHook>()
+                            .AddSingleton<IHttpRequestHook, HttpRequestHook>()
                             .AddConvey()
                             .AddMetrics())
                         .Configure(app => app.UseNtrada())

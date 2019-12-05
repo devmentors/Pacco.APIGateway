@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Ntrada;
 using Ntrada.Extensions.RabbitMq;
@@ -6,19 +7,22 @@ using Ntrada.Hooks;
 
 namespace Pacco.APIGateway.Infrastructure
 {
-    internal sealed class CorrelationContextHttpHook : IBeforeHttpClientRequestHook
+    internal sealed class HttpRequestHook : IHttpRequestHook
     {
         private readonly IContextBuilder _contextBuilder;
 
-        public CorrelationContextHttpHook(IContextBuilder contextBuilder)
+        public HttpRequestHook(IContextBuilder contextBuilder)
         {
             _contextBuilder = contextBuilder;
         }
 
-        public void Invoke(HttpClient client, ExecutionData data)
+
+        public Task InvokeAsync(HttpRequestMessage request, ExecutionData data)
         {
             var context = JsonConvert.SerializeObject(_contextBuilder.Build(data));
-            client.DefaultRequestHeaders.TryAddWithoutValidation("Correlation-Context", context);
+            request.Headers.TryAddWithoutValidation("Correlation-Context", context);
+            
+            return Task.CompletedTask;
         }
     }
 }
