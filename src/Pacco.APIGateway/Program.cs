@@ -31,7 +31,6 @@ namespace Pacco.APIGateway
                             builder.AddYamlFile(configPath, false);
                         })
                         .ConfigureServices(services => services.AddNtrada()
-                            .AddOpenTracing()
                             .AddSingleton<IContextBuilder, CorrelationContextBuilder>()
                             .AddSingleton<ISpanContextBuilder, SpanContextBuilder>()
                             .AddSingleton<IHttpRequestHook, HttpRequestHook>()
