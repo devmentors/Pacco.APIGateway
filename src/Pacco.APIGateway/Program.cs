@@ -26,8 +26,14 @@ namespace Pacco.APIGateway
                 {
                     webBuilder.ConfigureAppConfiguration(builder =>
                         {
+                            const string extension = "yml";
                             var ntradaConfig = Environment.GetEnvironmentVariable("NTRADA_CONFIG");
-                            var configPath = args?.FirstOrDefault() ?? ntradaConfig ?? "ntrada.yml";
+                            var configPath = args?.FirstOrDefault() ?? ntradaConfig ?? $"ntrada.{extension}";
+                            if (!configPath.EndsWith($".{extension}"))
+                            {
+                                configPath += $".{extension}";
+                            }
+
                             builder.AddYamlFile(configPath, false);
                         })
                         .ConfigureServices(services => services.AddNtrada()

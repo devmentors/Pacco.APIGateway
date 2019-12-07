@@ -127,6 +127,7 @@ Content-Type: application/json
 
 ### Browse the resources filtered by tags if needed
 GET {{api}}/availability/resources?tags={{tags}}&matchAllTags=false
+Authorization: Bearer {{accessToken}}
 
 ### Assign a vehicle to your order and set the desired delivery date
 @deliveryDate = 2020-01-10
