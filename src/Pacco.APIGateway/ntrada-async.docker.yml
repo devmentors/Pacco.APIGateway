@@ -290,17 +290,15 @@ modules:
         use: downstream
         downstream: identity-service/me
         auth: true
-    
+
       - upstream: /sign-up
         method: POST
+        use: downstream
+        downstream: identity-service/sign-up
         auth: false
         resourceId:
           property: userId
           generate: true
-        use: rabbitmq
-        config:
-          exchange: identity
-          routing_key: sign_up
     
       - upstream: /sign-in
         method: POST
