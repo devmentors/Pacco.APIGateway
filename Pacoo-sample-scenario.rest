@@ -114,17 +114,22 @@ Authorization: Bearer {{accessToken}}
 
 ### Add a vehicle as the available resource being able to deliver the pacakge
 @resourceId = {{add_vehicle.response.headers.Resource-ID}}
+@tags = ["vehicle", "armor"]
 
 POST {{api}}/availability/resources
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "resourceId": "{{resourceId}}"
+  "resourceId": "{{resourceId}}",
+  "tags": {{tags}}
 }
 
+### Browse the resources filtered by tags if needed
+GET {{api}}/availability/resources?tags={{tags}}&matchAllTags=false
+
 ### Assign a vehicle to your order and set the desired delivery date
-@deliveryDate = 2019-10-10
+@deliveryDate = 2020-01-10
 
 POST {{api}}/orders/{{orderId}}/vehicles/{{vehicleId}}
 Authorization: Bearer {{accessToken}}

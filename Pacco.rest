@@ -7,10 +7,11 @@
 @vehicleId = 00000000-0000-0000-0000-000000000000
 @resourceId = 00000000-0000-0000-0000-000000000000
 @deliveryId = 00000000-0000-0000-0000-000000000000
-@dateTime = 2019-10-10
-@deliveryDate = 2019-10-10
+@dateTime = 2020-01-10
+@deliveryDate = 2020-01-10
 @orderPrice = 100
 @state = valid
+@tags = ["vehicle", "armor"]
 
 
 # ============== IDENTITY ==================== #
@@ -80,6 +81,9 @@ Content-Type: application/json
 # ============== AVAILABILITY ==================== #
 
 ###
+GET {{api}}/availability/resources?tags={{tags}}&matchAllTags=false
+
+###
 GET {{api}}/availability/resources/{{resourceId}}
 Authorization: Bearer {{accessToken}}
 
@@ -89,7 +93,8 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "resourceId": "{{resourceId}}"
+  "resourceId": "{{resourceId}}",
+  "tags": {{tags}}
 }
 
 ###

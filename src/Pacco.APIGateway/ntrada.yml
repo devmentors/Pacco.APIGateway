@@ -70,6 +70,12 @@ modules:
   availability:
     path: availability
     routes:
+      - upstream: /resources
+        method: GET
+        use: downstream
+        downstream: availability-service/resources
+        auth: true
+        
       - upstream: /resources/{resourceId}
         method: GET
         use: downstream
