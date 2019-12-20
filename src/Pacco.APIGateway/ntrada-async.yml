@@ -41,13 +41,10 @@ extensions:
       - Total-Count
 
   jwt:
-    key: eiquief5phee9pazo0Faegaez9gohThailiur5woy2befiech1oarai4aiLi6ahVecah3ie9Aiz6Peij
-    issuer: pacco
-    issuers:
-    validateIssuer: true
-    audience:
-    audiences:
+    issuerSigningKey: eiquief5phee9pazo0Faegaez9gohThailiur5woy2befiech1oarai4aiLi6ahVecah3ie9Aiz6Peij
+    validIssuer: pacco
     validateAudience: false
+    validateIssuer: true
     validateLifetime: true
 
   rabbitmq:
