@@ -1,17 +1,21 @@
 #!/bin/bash
 TAG=''
+VERSION_TAG=
 
 case "$TRAVIS_BRANCH" in
   "master")
     TAG=latest
+    VERSION_TAG=$TRAVIS_BUILD_NUMBER
     ;;
   "develop")
     TAG=dev
+    VERSION_TAG=$TAG-$TRAVIS_BUILD_NUMBER
     ;;    
 esac
 
-IMAGE=$DOCKER_USERNAME/pacco.apigateway:$TAG
+REPOSITORY=$DOCKER_USERNAME/pacco.apigateway
 
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-docker build -t $IMAGE .
-docker push $IMAGE
+docker build -t $REPOSITORY:$TAG -t $REPOSITORY:$VERSION_TAG .
+docker push $REPOSITORY:$TAG
+docker push $REPOSITORY:$VERSION_TAG
