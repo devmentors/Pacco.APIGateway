@@ -20,4 +20,6 @@ Pacco.APIGateway is an API Gateway built with [Ntrada](https://github.com/snatch
 
 Service can be started locally via `dotnet run` command (executed in the `/src/Pacco.APIGateway` directory) or by running `./scripts/start.sh` shell script in the root folder of repository.
 
-By default the service will be available under http://localhost:5000.
+By default, the service will be available under http://localhost:5000.
+
+You can also start the service via Docker, either by building a local Dockerfile: `docker build -t pacco.apigateway .` or using the official one `docker pull devmentors/pacco.apigateway`.
