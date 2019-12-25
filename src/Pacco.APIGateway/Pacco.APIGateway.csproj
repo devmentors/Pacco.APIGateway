@@ -15,6 +15,7 @@
     <PackageReference Include="Ntrada.Extensions.CustomErrors" Version="0.4.*" />
     <PackageReference Include="Ntrada.Extensions.Jwt" Version="0.4.*" />
     <PackageReference Include="Ntrada.Extensions.RabbitMq" Version="0.4.*" />
+    <PackageReference Include="Ntrada.Extensions.Swagger" Version="0.4.*" />
     <PackageReference Include="Ntrada.Extensions.Tracing" Version="0.4.*" />
   </ItemGroup>
 

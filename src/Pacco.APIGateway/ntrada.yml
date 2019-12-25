@@ -47,6 +47,14 @@ extensions:
     validateIssuer: true
     validateLifetime: true
 
+  swagger:
+    name: Pacco
+    reDocEnabled: false
+    title: Pacco API
+    version: v1
+    routePrefix: docs
+    includeSecurity: true
+
   tracing:
     serviceName: api-gateway
     udpHost: localhost
