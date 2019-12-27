@@ -7,7 +7,6 @@ namespace Pacco.APIGateway.Infrastructure
     {
         public string CorrelationId { get; set; }
         public string SpanContext { get; set; }
-        public int Retries { get; set; }
         public UserContext User { get; set; }
         public string ResourceId { get; set; }
         public string TraceId { get; set; }
