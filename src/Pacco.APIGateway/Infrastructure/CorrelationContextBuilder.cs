@@ -24,7 +24,7 @@ namespace Pacco.APIGateway.Infrastructure
                 tracer.ActiveSpan is null ? string.Empty : tracer.ActiveSpan.Context.ToString();
 
             var name = string.Empty;
-            if (!(executionData.Route.Config is null) &&
+            if (executionData.Route.Config is {} &&
                 executionData.Route.Config.TryGetValue("routing_key", out var routingKey))
             {
                 name = routingKey ?? string.Empty;
