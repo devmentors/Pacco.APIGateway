@@ -30,7 +30,7 @@ extensions:
       - '*'
     allowedMethods:
       - post
-      - delete
+      - put
       - delete
     allowedHeaders:
       - '*'
