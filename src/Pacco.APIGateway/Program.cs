@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Convey;
 using Convey.Logging;
 using Convey.Metrics.AppMetrics;
+using Convey.Security;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,7 +42,8 @@ namespace Pacco.APIGateway
                             .AddSingleton<ISpanContextBuilder, SpanContextBuilder>()
                             .AddSingleton<IHttpRequestHook, HttpRequestHook>()
                             .AddConvey()
-                            .AddMetrics())
+                            .AddMetrics()
+                            .AddSecurity())
                         .Configure(app => app.UseNtrada())
                         .UseLogging();
                 });
