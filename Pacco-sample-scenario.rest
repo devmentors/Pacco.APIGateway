@@ -20,9 +20,9 @@ Content-Type: application/json
   "password": "secret"
 }
 
-@accessToken = {{sign_in.response.body.$.accessToken}}
 
 ### Get your user account details
+@accessToken = {{sign_in.response.body.$.accessToken}}
 GET {{api}}/identity/me
 Authorization: Bearer {{accessToken}}
 
@@ -53,9 +53,9 @@ Content-Type: application/json
   "description": "My parcel #1"
 }
 
-@parcelId = {{add_parcel.response.headers.Resource-ID}}
 
 ### Get your parcels
+@parcelId = {{add_parcel.response.headers.Resource-ID}}
 GET {{api}}/parcels
 Authorization: Bearer {{accessToken}}
 
@@ -72,9 +72,9 @@ Content-Type: application/json
 {
 }
 
-@orderId = {{create_order.response.headers.Resource-ID}}
 
 ### Get your orders
+@orderId = {{create_order.response.headers.Resource-ID}}
 GET {{api}}/orders
 Authorization: Bearer {{accessToken}}
 
@@ -106,9 +106,9 @@ Content-Type: application/json
   "variants": 1
 }
 
-@vehicleId = {{add_vehicle.response.headers.Resource-ID}}
 
 ### Get a newly added vehicle
+@vehicleId = {{add_vehicle.response.headers.Resource-ID}}
 GET {{api}}/vehicles?payloadCapacity=0&loadingCapacity=0&variants=1
 Authorization: Bearer {{accessToken}}
 
@@ -166,10 +166,10 @@ Content-Type: application/json
   "dateTime": "{{deliveryDate}}"
 }
 
-@deliveryId = {{start_delivery.response.headers.Resource-ID}}
 
 
 ### Add some internal delivery transportation details
+@deliveryId = {{start_delivery.response.headers.Resource-ID}}
 POST {{api}}/deliveries/{{deliveryId}}/registrations
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
